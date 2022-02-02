@@ -1,10 +1,17 @@
-import { StatusBar as ExpoStatusBar} from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StatusBar as ExpoStatusBar} from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ThemeProvider } from "styled-components/native";
 
-import {Ionicons, MaterialIcons, FontAwesome5} from '@expo/vector-icons';
+import {useFonts as useOswald, Oswald_400Regular} from "@expo-google-fonts/oswald";
 
-import {Menu} from "./menu/screens/menu.screen";
+import {useFonts as useLato, Lato_400Regular} from "@expo-google-fonts/lato";
+
+import { theme } from "../components/theme";
+
+import {Ionicons, MaterialIcons, FontAwesome5} from "@expo/vector-icons";
+
+import {MenuScreen} from "./menu/screens/menu.screen";
 // import {Users} from "./users/main/users";
 // import {Orders} from "./orders/main/orders";
 // import {Riders} from "./riders/main/riders";
@@ -15,9 +22,23 @@ const Tab = createBottomTabNavigator();
 
 const PerfectMenu = () => {
 
+  const [oswaldLoaded] = useOswald({
+    Oswald_400Regular,
+  });
+
+  const [latoLoaded] = useLato({
+    Lato_400Regular,
+  });
+
+  if(!oswaldLoaded || !latoLoaded) {
+    return null;
+  }
+
   return (
     <>    
-      <Menu />
+      <ThemeProvider theme={theme}>
+        <MenuScreen />
+      </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
 
