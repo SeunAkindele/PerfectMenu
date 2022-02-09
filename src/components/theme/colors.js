@@ -1,3 +1,5 @@
+import { RegisterBackground } from "../../views/account/screens/register-screen/register-screen.styles";
+
 export const colors = {
   brand: {
     primary: "#2182BD",
@@ -16,6 +18,7 @@ export const colors = {
   bg: {
     primary: "#FFFFFF",
     secondary: "#F1F1F1",
+    accountBg: 'rgba(255, 255, 255, 0.3)',
   },
   text: {
     primary: "#262626",
