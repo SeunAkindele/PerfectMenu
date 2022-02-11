@@ -1,5 +1,3 @@
-import { RegisterBackground } from "../../views/account/screens/register-screen/register-screen.styles";
-
 export const colors = {
   brand: {
     primary: "#2182BD",

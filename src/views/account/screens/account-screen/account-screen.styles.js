@@ -35,3 +35,12 @@ export const AuthButton = styled(Button).attrs({
 export const Title = styled(Text)`
   font-size: 25px;
 `;
+
+export const AnimationWrapper = styled.View`
+  width: 100%;
+  height: 45%;
+  position: absolute;
+  bottom: 70%;
+  /* padding: ${({theme}) => theme.space[2]}; */
+`;
+
