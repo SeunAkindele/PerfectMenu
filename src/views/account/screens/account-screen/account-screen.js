@@ -14,7 +14,7 @@ export const AccountScreen = ({ navigation }) => {
         autoPlay
         loop
         resizeMode="cover"
-        source={require("../../../../assets/images/watermelon.json")}
+        source={require("../../../../assets/animations/plate.json")}
       />
       </AnimationWrapper>
       <Title>Perfect Menu</Title>

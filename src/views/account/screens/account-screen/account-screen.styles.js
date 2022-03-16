@@ -37,10 +37,8 @@ export const Title = styled(Text)`
 `;
 
 export const AnimationWrapper = styled.View`
-  width: 100%;
-  height: 45%;
+  width: 90%;
+  height: 50%;
   position: absolute;
-  bottom: 70%;
-  /* padding: ${({theme}) => theme.space[2]}; */
+  bottom: 67%;
 `;
-
