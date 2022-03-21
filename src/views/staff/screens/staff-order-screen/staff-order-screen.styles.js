@@ -55,3 +55,7 @@ export const Refresh = styled(Ionicons)`
   right: 10px;
   color: ${(props) => props.theme.colors.text.success};
 `;
+
+export const SearchContainer = styled(View)`
+  padding: ${(props) => props.theme.space[3]};
+`;

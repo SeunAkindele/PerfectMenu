@@ -1,16 +1,16 @@
 import React from "react";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
-import {CustomerCard, Info, LeftInfo, RightInfo, Phone, User, Trash, Check} from "./customer-info-card.styles";
+import {StaffCard, Info, LeftInfo, Phone, User, RightInfo, Trash, Check} from "./staff-info-card.styles";
 
-export const CustomerInfoCard = ({ customer = {}, authorization }) => {
+export const StaffInfoCard = ({ staff = {}, authorization }) => {
   const {name = "Oriade Akindele", phone = "09031838944", photos = [
     "https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-oranges-ice-600x750.jpg",
-  ]} = customer;
-  
+  ]} = staff;
+
   return (
     <>
-      <CustomerCard elevation={5}>
+      <StaffCard elevation={5}>
         <Info>
           <LeftInfo>
             <User onPress={() => alert("deleted")} name="user-circle-o" />
@@ -24,9 +24,9 @@ export const CustomerInfoCard = ({ customer = {}, authorization }) => {
             {authorization == 2 &&  <Trash onPress={() => alert("deleted")} name="closecircle" /> }
           </RightInfo>
         </Info>
-      </CustomerCard>
+      </StaffCard>
       <Spacer position="top" size="large" />
-      <CustomerCard elevation={5}>
+      <StaffCard elevation={5}>
         <Info>
           <LeftInfo>
             <User onPress={() => alert("deleted")} name="user-circle-o" />
@@ -40,7 +40,7 @@ export const CustomerInfoCard = ({ customer = {}, authorization }) => {
             {authorization == 2 &&  <Check onPress={() => alert("deleted")} name="checkcircle" /> }
           </RightInfo>
         </Info>
-      </CustomerCard>
+      </StaffCard>
       <Spacer position="top" size="large" />
     </>
   );

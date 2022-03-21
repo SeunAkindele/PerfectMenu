@@ -11,19 +11,19 @@ export const Progress = styled(ProgressBar).attrs({
   height: ${(props) => props.theme.space[2]};
 `;
 
-export const CustomerContainer = styled(View)`
+export const StaffContainer = styled(View)`
   align-items: center;
   justify-content: center;
   flex: 1;
 `;
 
-export const CustomerIcon = styled(Avatar.Icon).attrs({
+export const StaffIcon = styled(Avatar.Icon).attrs({
   size: 128,
 })`
   background-color: ${(props) => props.bg || props.theme.colors.brand.primary};
 `;
 
-export const CustomerList = styled(FlatList).attrs({
+export const StaffList = styled(FlatList).attrs({
   contentContainerStyle: {
     padding: 16,
   }
@@ -31,7 +31,7 @@ export const CustomerList = styled(FlatList).attrs({
 
 `;
 
-export const CustomerManagement = styled(TouchableOpacity)`
+export const StaffManagement = styled(TouchableOpacity)`
   height: 9%;
   width: 100%;
   background-color: ${(props) => props.theme.colors.brand.primary};

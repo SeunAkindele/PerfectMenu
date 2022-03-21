@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { TouchableOpacity } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import { StaffOrderContainer, StaffOrderIcon, StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh } from './staff-order-screen.styles';
+import { StaffOrderContainer, StaffOrderIcon, StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh, SearchContainer } from './staff-order-screen.styles';
+import { Searchbar } from "react-native-paper";
 import {Text} from "../../../../components/typography/text.component";
 import { StaffOrderInfoCard } from "../../components/staff-order-info-card/staff-order-info-card.component";
 import { StaffContext } from "../../context/staff.context";
@@ -62,6 +63,9 @@ export const StaffOrderScreen = ({navigation}) => {
           <Text>No orders yet!</Text>
         </StaffOrderContainer>
       : <>
+           <SearchContainer>
+            <Searchbar placeholder="Search" />
+          </SearchContainer>
           <StaffOrderList
             data={staffOrder}
             renderItem={({ item }) => (

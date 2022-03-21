@@ -6,8 +6,10 @@ import { MenuNavigator } from "./menu.navigator";
 import {CartNavigator} from "./cart.navigator";
 import {OrderNavigator} from "./order.navigator";
 import {StaffNavigator} from "./staff.navigator";
+import {AdminNavigator} from "./admin.navigator";
 import { SettingNavigator } from "./setting.navigator";
 import { CustomerNavigator } from "./customer.navigator";
+import { ItemNavigator } from "./item.navigator";
 
 import {Ionicons, MaterialIcons, Feather} from "@expo/vector-icons";
 
@@ -29,7 +31,13 @@ export const AppNavigator = ({authorization}) => (
           } else if (route.name === 'Order') {
             iconName = "md-basket";
             return <Ionicons name={iconName} size={size} color={color} />;
-          }else if (route.name === 'Customer') {
+          } else if (route.name === 'Customer') {
+            iconName = "user";
+            return <Feather name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Item') {
+            iconName = "fast-food-outline";
+            return <Ionicons name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Staff') {
             iconName = "user";
             return <Feather name={iconName} size={size} color={color} />;
           } else if (route.name === 'Setting') {
@@ -46,8 +54,8 @@ export const AppNavigator = ({authorization}) => (
         authorization === 2 &&
         <>
           <Tab.Screen name="Customer" component={CustomerNavigator} />
-          <Tab.Screen name="Staff" component={CustomerNavigator} />
-          <Tab.Screen name="Item" component={OrderNavigator} />
+          <Tab.Screen name="Staff" component={AdminNavigator} />
+          <Tab.Screen name="Item" component={ItemNavigator} />
           <Tab.Screen name="Setting" component={SettingNavigator} />
         </>
       }

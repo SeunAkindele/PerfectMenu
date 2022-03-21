@@ -5,12 +5,12 @@ import { AppNavigator } from "./app.navigator";
 import { AccountNavigator } from "./account.navigator";
 
 export const Navigation = () => {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   const authorization = 2;
   
   return (
     <NavigationContainer>
-      { !isAuthenticated ? <AppNavigator authorization={authorization} /> : <AccountNavigator /> }
+      { isAuthenticated ? <AppNavigator authorization={authorization} /> : <AccountNavigator /> }
     </NavigationContainer>
   )
 }

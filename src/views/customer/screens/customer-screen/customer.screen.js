@@ -11,6 +11,8 @@ export const CustomerScreen = ({navigation}) => {
  
   const { customer } = useContext(CustomerContext);
 
+  const authorization = 2;
+
   return (
     <SafeArea>
       {customer === "" 
@@ -28,16 +30,19 @@ export const CustomerScreen = ({navigation}) => {
               <TouchableOpacity onPress={() => navigation.navigate("CustomerOrders", {
                 customer: customer,
               })}>
-                <CustomerInfoCard customer={item} />
+                <CustomerInfoCard customer={item} authorization={authorization} />
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item.name}
           />
-          {/* For admin */}
-          {/* <CustomerManagement onPress={() => navigation.navigate("CustomerManagement")}>
-            <Text color="white" variant="label">Manage Customers</Text>
-            <Arrow name="up" />
-          </CustomerManagement> */}
+          {
+            authorization == 2
+            &&
+            <CustomerManagement onPress={() => navigation.navigate("CustomerManagement")}>
+              <Text color="white" variant="label">Manage Customers</Text>
+              <Arrow name="up" />
+            </CustomerManagement>
+          }
         </>
       }
     </SafeArea>

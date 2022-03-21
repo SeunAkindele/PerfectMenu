@@ -2,42 +2,44 @@ import React, {useContext, useEffect, useState} from 'react';
 import { TouchableOpacity } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { Searchbar } from "react-native-paper";
-import { CustomerContainer, CustomerIcon, CustomerList, CustomerManagement, Arrow, SearchContainer} from './staff-screen.styles';
+import { StaffContainer, StaffIcon, StaffList, StaffManagement, Arrow, SearchContainer} from './staff-screen.styles';
 import {Text} from "../../../../components/typography/text.component";
-import { CustomerInfoCard } from "../../components/customer-info-card/customer-info-card.component";
-import { CustomerContext } from "../../context/customer.context";
+import { StaffInfoCard } from "../../components/staff-info-card/staff-info-card.component";
+import { StaffContext } from "../../context/staff.context";
 
 export const StaffScreen = ({navigation}) => {
  
-  const { customer } = useContext(CustomerContext);
+  const { staff } = useContext(StaffContext);
+
+  const authorization = 2;
 
   return (
     <SafeArea>
-      {customer === "" 
-      ? <CustomerContainer>
-          <CustomerIcon bg="#ccc" icon="close" />
-          <Text>No customers yet!</Text>
-        </CustomerContainer>
+      {staff === "" 
+      ? <StaffContainer>
+          <StaffIcon bg="#ccc" icon="close" />
+          <Text>No staff yet!</Text>
+        </StaffContainer>
       : <>
           <SearchContainer>
             <Searchbar placeholder="Search" />
           </SearchContainer>
-          <CustomerList
-            data={customer}
+          <StaffList
+            data={staff}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate("CustomerOrders", {
-                customer: customer,
+              <TouchableOpacity onPress={() => navigation.navigate("StaffOrder", {
+                staff: staff,
               })}>
-                <CustomerInfoCard customer={item} />
+                <StaffInfoCard staff={item} authorization={authorization} />
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item.name}
           />
-          {/* For admin */}
-          {/* <CustomerManagement onPress={() => navigation.navigate("CustomerManagement")}>
-            <Text color="white" variant="label">Manage Customers</Text>
+         
+          <StaffManagement onPress={() => navigation.navigate("StaffManagement")}>
+            <Text color="white" variant="label">Manage Staffs</Text>
             <Arrow name="up" />
-          </CustomerManagement> */}
+          </StaffManagement>
         </>
       }
     </SafeArea>
