@@ -1,5 +1,4 @@
-import 'react-native-gesture-handler';
-
+import React, {useContext} from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { MenuNavigator } from "./menu.navigator";
@@ -10,13 +9,45 @@ import {AdminNavigator} from "./admin.navigator";
 import { SettingNavigator } from "./setting.navigator";
 import { CustomerNavigator } from "./customer.navigator";
 import { ItemNavigator } from "./item.navigator";
-
 import {Ionicons, MaterialIcons, Feather} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
-export const AppNavigator = ({authorization}) => (
-  
+export const AppNavigator = ({authorization}) => {
+
+  const nav = () => {
+    if(authorization == 0){
+    return (
+      <>
+       <Tab.Screen name="Menu" component={MenuNavigator} />
+          <Tab.Screen name="Cart" component={CartNavigator} />
+          <Tab.Screen name="Order" component={OrderNavigator} />
+          <Tab.Screen name="Setting" component={SettingNavigator} />
+          </>
+    )
+    } else if(authorization == 1) {
+      return (
+        <>
+          <Tab.Screen name="Dashboard" component={StaffNavigator} />
+          <Tab.Screen name="Order" component={StaffNavigator} />
+          <Tab.Screen name="Customer" component={CustomerNavigator} />
+          <Tab.Screen name="Setting" component={SettingNavigator} />
+        </>
+      )
+    } else if(authorization == 2) {
+      return (
+        <>
+        <Tab.Screen name="Dashboard" component={CustomerNavigator} />
+         <Tab.Screen name="Customer" component={CustomerNavigator} />
+          <Tab.Screen name="Staff" component={AdminNavigator} />
+          <Tab.Screen name="Item" component={ItemNavigator} />
+          <Tab.Screen name="Setting" component={SettingNavigator} />
+        </>
+      )
+    }
+  }
+
+  return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
@@ -50,31 +81,7 @@ export const AppNavigator = ({authorization}) => (
         headerShown: false
       })}
     >
-      {
-        authorization === 2 &&
-        <>
-          <Tab.Screen name="Customer" component={CustomerNavigator} />
-          <Tab.Screen name="Staff" component={AdminNavigator} />
-          <Tab.Screen name="Item" component={ItemNavigator} />
-          <Tab.Screen name="Setting" component={SettingNavigator} />
-        </>
-      }
-      {
-        authorization === 1 &&
-        <>
-          <Tab.Screen name="Order" component={StaffNavigator} />
-          <Tab.Screen name="Customer" component={CustomerNavigator} />
-          <Tab.Screen name="Setting" component={SettingNavigator} />
-        </>
-      }
-      {
-        authorization === 0 && 
-        <>
-          <Tab.Screen name="Menu" component={MenuNavigator} />
-          <Tab.Screen name="Cart" component={CartNavigator} />
-          <Tab.Screen name="Order" component={OrderNavigator} />
-          <Tab.Screen name="Setting" component={SettingNavigator} />
-        </>
-      }
+      {nav()}
     </Tab.Navigator>
-)
+  );
+}

@@ -5,9 +5,11 @@ import { SafeArea } from '../../../components/utility/safe-area.component';
 import { Text } from '../../../components/typography/text.component';
 import { Spacer } from '../../../components/spacer/spacer.component';
 import { List, Avatar } from 'react-native-paper';
+import { LoginContext } from '../../account/context/login.context';
+import { ucFirst } from '../../../components/utility/functions';
 
 export const SettingScreen = ({ navigation }) => {
-  // const { onLogout } = useContext();
+  const { onLogout, user } = useContext(LoginContext);
 
   const SettingsItem = styled(List.Item)`
     padding: ${(props) => props.theme.space[3]};
@@ -24,7 +26,7 @@ export const SettingScreen = ({ navigation }) => {
         <Avatar.Icon size={180} icon="human" backgroundColor="#ccc" />
         </Spacer>
         <Spacer position="top" size="large">
-        <Text variant="label">oriadeakindele@gmail.com</Text>
+        <Text variant="label">{user.email}</Text>
       </Spacer>
       </AvatarContainer>
      
@@ -32,13 +34,17 @@ export const SettingScreen = ({ navigation }) => {
         <SettingsItem
           title="Logout"
           left={(props) => <List.Icon {...props} color="black" icon="door" />}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => onLogout()}
         />
-         {/* <SettingsItem
-          title="Logut"
+         <SettingsItem
+          title={ucFirst(user.name)}
           left={(props) => <List.Icon {...props} color="black" icon="door" />}
-          onPress={() => console.log("hi")}
-        /> */}
+        />
+
+        <SettingsItem
+          title={ucFirst(user.phone)}
+          left={(props) => <List.Icon {...props} color="black" icon="door" />}
+        />
       </List.Section>
     </SafeArea>
   )

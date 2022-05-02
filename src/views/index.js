@@ -8,6 +8,10 @@ import { CartContextProvider } from "./cart/context/cart.context";
 import { OrderContextProvider } from "./order/context/order.context";
 import { StaffContextProvider } from "./staff/context/staff.context";
 import { CustomerContextProvider } from "./customer/context/customer.context";
+import { ItemContextProvider } from "./item/context/item.context";
+import { ItemManagementContextProvider } from "./item/context/item-management.context";
+import { LoginContextProvider } from "./account/context/login.context";
+import { RegisterContextProvider } from "./account/context/register.context";
 import { Navigation } from "../components/navigation";
 
 const PerfectMenu = () => {
@@ -27,17 +31,25 @@ const PerfectMenu = () => {
   return (
     <>    
       <ThemeProvider theme={theme}>
-        <CustomerContextProvider>
-          <StaffContextProvider>
-            <OrderContextProvider>
-              <CartContextProvider>
-                <MenuContextProvider>
-                  <Navigation />
-                </MenuContextProvider>
-              </CartContextProvider>
-            </OrderContextProvider>
-          </StaffContextProvider>
-        </CustomerContextProvider>
+        <RegisterContextProvider>
+          <LoginContextProvider>
+            <ItemManagementContextProvider>
+              <ItemContextProvider>
+                <CustomerContextProvider>
+                  <StaffContextProvider>
+                    <OrderContextProvider>
+                      <CartContextProvider>
+                        <MenuContextProvider>
+                          <Navigation />
+                        </MenuContextProvider>
+                      </CartContextProvider>
+                    </OrderContextProvider>
+                  </StaffContextProvider>
+                </CustomerContextProvider>
+              </ItemContextProvider>
+            </ItemManagementContextProvider>
+          </LoginContextProvider>
+        </RegisterContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>

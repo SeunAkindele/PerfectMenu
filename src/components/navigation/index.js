@@ -3,10 +3,10 @@ import React, {useContext} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppNavigator } from "./app.navigator";
 import { AccountNavigator } from "./account.navigator";
+import { LoginContext } from "../../views/account/context/login.context";
 
 export const Navigation = () => {
-  const isAuthenticated = true;
-  const authorization = 2;
+  const { isAuthenticated, authorization } = useContext(LoginContext);
   
   return (
     <NavigationContainer>

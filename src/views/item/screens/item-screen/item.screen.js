@@ -1,41 +1,53 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-// import { MenuInfoCard } from "../../components/menu-info-card/menu-info-card.component";
+import { ItemInfoCard } from "../../components/item-info-card/item-info-card.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
-// import { SearchContainer, MenuList } from "./menu-screen.styles";
-// import { MenuContext } from "../../context/menu.context";
+import {Text} from "../../../../components/typography/text.component";
+import { SearchContainer, ItemList, ItemManagement, Arrow } from "./item-screen.styles";
+import { ItemContext } from "../../context/item.context";
 import { FadeInView } from "../../../../components/animations/fade.animation";
 import { IsLoading } from "../../../../components/loading/loading.component";
 
 export const ItemScreen = ({ navigation }) => {
-  // const { menu } = useContext(MenuContext);
-  
+  const { items } = useContext(ItemContext);
+  const [data, setData] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      
+    }, [])
+  );
+
   return (
     <SafeArea>
 
       {/* <IsLoading /> */}
-      {/* <SearchContainer>
+      <SearchContainer>
         <Searchbar placeholder="Search" />
-      </SearchContainer> */}
+      </SearchContainer>
     
-        {/* <MenuList
-          data={menu}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("MenuDetail", {
-              menu: item,
-            })}>
-              <Spacer position="bottom" size="large">
-                <FadeInView>
-                  <MenuInfoCard menu={item} />
-                </FadeInView>
-              </Spacer>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.name}
-        /> */}
-      
+      <ItemList
+        data={items}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate("ItemDetails", {
+            item: item,
+          })}>
+            <Spacer position="bottom" size="large">
+              <FadeInView>
+                <ItemInfoCard item={item} />
+              </FadeInView>
+            </Spacer>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.name}
+      />
+       <ItemManagement onPress={() => navigation.navigate("ItemManagement")}>
+          <Text color="white" variant="label">Manage Items</Text>
+          <Arrow name="up" />
+        </ItemManagement>
     </SafeArea>
   );
 };

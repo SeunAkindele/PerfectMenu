@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useState, useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { SafeArea } from "../../../../components/utility/safe-area.component";
@@ -8,14 +8,16 @@ import { SearchContainer, MenuList } from "./menu-screen.styles";
 import { MenuContext } from "../../context/menu.context";
 import { FadeInView } from "../../../../components/animations/fade.animation";
 import { IsLoading } from "../../../../components/loading/loading.component";
+import { LoginContext } from "../../../account/context/login.context";
 
 export const MenuScreen = ({ navigation }) => {
   const { menu } = useContext(MenuContext);
+  const {isLoading, user} = useContext(LoginContext);
   
   return (
     <SafeArea>
 
-      {/* <IsLoading /> */}
+      {/* <IsLoading loading={isLoading} /> */}
       <SearchContainer>
         <Searchbar placeholder="Search" />
       </SearchContainer>
