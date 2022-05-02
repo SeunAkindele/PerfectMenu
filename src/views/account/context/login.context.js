@@ -26,7 +26,6 @@ export const LoginContextProvider = ({ children }) => {
       setLoading(true);
       api("login", {request: inputs}, "", response => {
         if(response['success'] === true) {
-          console.log(response['data']['token']);
           setUser(response['data']);
           setAuthorization(response['data']['type']);
           setIsAuthenticated(true);

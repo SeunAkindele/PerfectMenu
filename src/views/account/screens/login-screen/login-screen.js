@@ -7,7 +7,7 @@ import { LoginContext } from "../../context/login.context";
 
 export const LoginScreen = ({ navigation }) => {
 
-  const { onLogin } = useContext(LoginContext);
+  const { onLogin, loading } = useContext(LoginContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +15,7 @@ export const LoginScreen = ({ navigation }) => {
 
   return (
     <LoginBackground>
+      <IsLoading loading={loading} />
       <LoginCover />
       <Title>Perfect Menu</Title>
       <LoginContainer>

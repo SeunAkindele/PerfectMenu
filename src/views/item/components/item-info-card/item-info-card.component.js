@@ -7,9 +7,9 @@ import { Text } from "../../../../components/typography/text.component";
 import {Icon, ItemCard, ItemCardCover, Address, Info, Rating, Section, SectionEnd} from "./item-info-card.styles";
 
 export const ItemInfoCard = ({ item = {} }) => {
-  const {name = 'Zuni Café', icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png", photos = [
-    "https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-oranges-ice-600x750.jpg",
-  ], address = '100 some random street', isOpenNow = true, rating = 4, isClosedTemporarily = true} = item;
+  const {name = 'Asun', icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png", photos = [
+    "http://localhost/PerfectMenuApi/localFiles/images/Asun.jpeg",
+  ], address = 'N100', isOpenNow = true, rating = 4, isClosedTemporarily = true} = item;
 
   // size for picture is width of 600px and height of 750px
 
