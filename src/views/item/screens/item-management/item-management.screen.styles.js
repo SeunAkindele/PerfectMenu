@@ -6,6 +6,7 @@ import{ Text } from "../../../../components/typography/text.component";
 
 export const ItemContainer = styled(View)`
   padding: ${(props) => props.theme.space[3]};
+  flex: 1;
 `;
 
 export const ItemInput = styled(TextInput)`

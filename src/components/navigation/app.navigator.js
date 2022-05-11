@@ -14,16 +14,16 @@ import {Ionicons, MaterialIcons, Feather} from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 export const AppNavigator = ({authorization}) => {
-
+  
   const nav = () => {
     if(authorization == 0){
     return (
       <>
-       <Tab.Screen name="Menu" component={MenuNavigator} />
-          <Tab.Screen name="Cart" component={CartNavigator} />
-          <Tab.Screen name="Order" component={OrderNavigator} />
-          <Tab.Screen name="Setting" component={SettingNavigator} />
-          </>
+        <Tab.Screen name="Menu" component={MenuNavigator} />
+        <Tab.Screen name="Cart" component={CartNavigator} />
+        <Tab.Screen name="Order" component={OrderNavigator} />
+        <Tab.Screen name="Setting" component={SettingNavigator} />
+      </>
     )
     } else if(authorization == 1) {
       return (

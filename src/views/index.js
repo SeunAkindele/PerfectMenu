@@ -15,7 +15,7 @@ import { RegisterContextProvider } from "./account/context/register.context";
 import { Navigation } from "../components/navigation";
 
 const PerfectMenu = () => {
-
+  
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
   });

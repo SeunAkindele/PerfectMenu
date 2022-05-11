@@ -77,7 +77,7 @@ export const RegisterScreen = ({ navigation }) => {
             disabled={loading && true}
             onPress={() => onRegister(name, email, phone, password, navigation)}
           >
-            Register
+            {loading ? 'Loading' : 'Register'}
           </AuthButton>
         
         </Spacer>

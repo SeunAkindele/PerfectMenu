@@ -12,25 +12,22 @@ import { FadeInView } from "../../../../components/animations/fade.animation";
 import { IsLoading } from "../../../../components/loading/loading.component";
 
 export const ItemScreen = ({ navigation }) => {
-  const { items } = useContext(ItemContext);
-  const [data, setData] = useState([]);
+  const { loading, getItems, data } = useContext(ItemContext);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      
-    }, [])
-  );
+  useFocusEffect(React.useCallback(() => {
+    getItems();
+  }, []));
 
   return (
     <SafeArea>
 
-      {/* <IsLoading /> */}
+      <IsLoading loading={loading} />
       <SearchContainer>
         <Searchbar placeholder="Search" />
       </SearchContainer>
     
       <ItemList
-        data={items}
+        data={data}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate("ItemDetails", {
             item: item,

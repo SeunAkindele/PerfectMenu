@@ -1,23 +1,71 @@
-import React, {useState, createContext, useEffect, useMemo} from "react";
+import React, {useState, createContext, useContext} from "react";
 import { api } from "../../../api/api";
-import { checkEmptyInput } from "../../../components/utility/functions";
+import { checkEmptyInput, ucFirst } from "../../../components/utility/functions";
+import { LoginContext } from "../../account/context/login.context";
 
 export const ItemManagementContext = createContext();
 
 export const ItemManagementContextProvider = ({ children }) => {
+  const { token } = useContext(LoginContext);
   const [loading, setLoading] = useState(false);
 
   return <ItemManagementContext.Provider value={{
-    onCreateItem: (token, navigation, localUri, data, type) => {
+    getItemCategory: () => {
+      const arr = [];
+      const inputs = {
+        page: 'getItemCategories'
+      }
+      setLoading(true);
+      api("itemCategory", {request: inputs}, token, response => {
+        if(response['success'] === true) {
+          response['data'].map(item => arr.push({label: ucFirst(item.name), value: item.id}));
+          setLoading(false);
+        } else {
+          alert(response['data'])
+          setLoading(false);
+        }
+      });
+
+      return arr;
+    },
+    onCreateItemCategory: (navigation, category) => {
+      if(checkEmptyInput([category])) {
+        alert("Item category cannot be empty");
+        return false;
+      }
+
+      const inputs={
+        page: 'createItemCategory',
+        name: category
+      };
+      
+      setLoading(true);
+      api("itemCategory", {request: inputs}, token, response => {
+        if(response['success'] === true) {
+          setLoading(false);
+          alert(response['data'])
+          navigation.goBack();
+        } else {
+          alert(response['data'])
+          setLoading(false);
+        }
+      });
+    },
+    onCreateItem: (navigation, localUri, data, type) => {
       const inputs = data.split("_");
       const image = inputs[0];
       const forms = inputs[1].split("-");
       const name = forms[1];
       const price = forms[2];
-      const ingredients = forms[3];
+      const categoryId = forms[4];
 
-      if(checkEmptyInput([name, price, ingredients]) || image === "camera.png") {
-        alert("None of the fields must be empty");
+      if(checkEmptyInput([name, price, categoryId])) {
+        alert("None of the asterisked fields must be empty");
+        return false;
+      }
+
+      if(image === "camera.png") {
+        alert("Image cannot be empty");
         return false;
       }
 
@@ -26,9 +74,10 @@ export const ItemManagementContextProvider = ({ children }) => {
 
       setLoading(true);
       api("item", formData, token, response => {
+        
         if(response['success'] === true) {
           setLoading(false);
-          console.log(response);
+          alert(response['data'])
           navigation.goBack();
         } else {
           alert(response['data'])

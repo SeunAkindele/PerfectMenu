@@ -4,6 +4,7 @@ import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
 import {TextInput} from "react-native-paper";
 import { LoginContext } from "../../context/login.context";
+import { IsLoading } from "../../../../components/loading/loading.component";
 
 export const LoginScreen = ({ navigation }) => {
 
@@ -49,9 +50,10 @@ export const LoginScreen = ({ navigation }) => {
           <AuthButton
             icon="lock-open-outline"
             mode="contained"
+            disabled={loading && true}
             onPress={() => onLogin(email, password)}
           >
-            Login
+            {loading ? 'Loading' : 'Login'}
           </AuthButton>
         </Spacer>
       </LoginContainer>
