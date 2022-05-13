@@ -1,11 +1,36 @@
-import React, {useState, createContext, useEffect, useMemo} from "react";
+import React, {useState, useContext, createContext} from "react";
+import { LoginContext } from "../../account/context/login.context";
 
 export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
+  const {token} = useContext(LoginContext);
+  const [loading, setLoading] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [cartNum, setCartNum] = useState(0);
+
+  const addToCart = () => {
+    const inputs = {
+      page: 'addToCart'
+    }
+
+    setLoading(true);
+    api("cart", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        setCart(response['data']['cart']);
+        setCartNum(response['data']['count'])
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   return <CartContext.Provider value={{
-    cart: [1, 2, 3, 4, 5,6,7,8,9,10],
-    total: 100000,
-    qty: 10
+    addToCart,
+    cart,
+    loading,
+    cartNum
   }}>{children}</CartContext.Provider>;
 }

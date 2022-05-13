@@ -7,17 +7,20 @@ export const MenuContext = createContext();
 
 export const MenuContextProvider = ({ children }) => {
   const {token} = useContext(LoginContext);
-  const [loading, setLoading] = useState(true);
-  const [menu, setMenu] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [menu, setMenu] = useState(null);
 
   const getMenu = () => {
     const inputs = {
       page: 'getItems'
     }
 
+    setLoading(true);
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
-        setMenu(response['data']);
+        !empty(response['data'])
+        ? setMenu(response['data'])
+        : setMenu([]);
         setLoading(false);
       } else {
         alert(response['data'])
@@ -25,6 +28,8 @@ export const MenuContextProvider = ({ children }) => {
       }
     });
   }
+
+ 
   
   return <MenuContext.Provider value={{
     getMenu,

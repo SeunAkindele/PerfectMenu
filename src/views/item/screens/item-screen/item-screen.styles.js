@@ -17,7 +17,7 @@ export const ItemList = styled(FlatList).attrs({
 `;
 
 export const Arrow = styled(AntDesign)`
-  font-size: ${(props) => props.theme.fontSizes.body};;
+  font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.inverse};
 `;
 
