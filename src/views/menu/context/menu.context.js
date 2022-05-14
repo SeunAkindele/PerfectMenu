@@ -7,33 +7,52 @@ export const MenuContext = createContext();
 
 export const MenuContextProvider = ({ children }) => {
   const {token} = useContext(LoginContext);
-  const [loading, setLoading] = useState(false);
-  const [menu, setMenu] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [menu, setMenu] = useState([]);
+  const [menuBackUp, setMenuBackUp] = useState([]);
+  const [cartNum, setCartNum] = useState(0);
 
   const getMenu = () => {
     const inputs = {
       page: 'getItems'
     }
 
-    setLoading(true);
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
-        !empty(response['data'])
-        ? setMenu(response['data'])
-        : setMenu([]);
-        setLoading(false);
+        if(strlen(response['data']) > 0){
+          setMenu(response['data'])
+          setMenuBackUp(response['data']);
+        } else {
+          setMenu(null);
+        }
       } else {
         alert(response['data'])
-        setLoading(false);
       }
     });
   }
 
- 
-  
+  const getCartNum = () => {
+    const inputs = {
+      page: 'getCartNum'
+    }
+
+    api("item", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        setCartNum(response['data'])
+      } else {
+        alert(response['data'])
+      }
+    });
+  }
+
   return <MenuContext.Provider value={{
     getMenu,
     menu,
-    loading
+    menuBackUp,
+    setMenu,
+    loading,
+    setLoading,
+    getCartNum,
+    cartNum
   }}>{children}</MenuContext.Provider>;
 }

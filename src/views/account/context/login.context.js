@@ -22,9 +22,9 @@ export const LoginContextProvider = ({ children }) => {
       password
     }
 
-    // setLoading(true);
+    setLoading(true);
     api("login", {request: inputs}, "", response => {
-      // console.log(response);return false;
+      
       if(response['success'] === true) {
         setToken(response['data']['token']);
         setUser(response['data']);

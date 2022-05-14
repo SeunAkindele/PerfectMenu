@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { CartInfoCard } from "../../components/cart-info-card/cart-info-card.component";
 import { CartContainer, CartIcon, CartList, CartCallToAction, Arrow } from './cart.screen.styles';
@@ -7,7 +8,17 @@ import {Text} from "../../../../components/typography/text.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 
 export const CartScreen = ({navigation}) => {
-  const { cart, total, qty } = useContext(CartContext);
+  const { getCart, cart, setLoading, loading } = useContext(CartContext);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      setTimeout(() => { 
+        getCart();
+        setLoading(false);
+      }, 3000);
+    }, [])
+  );
   
   return (
     <SafeArea>
@@ -27,7 +38,7 @@ export const CartScreen = ({navigation}) => {
             keyExtractor={(item) => item.name}
           />
           <CartCallToAction onPress={() => navigation.navigate("CartSummary", {
-                cart: cart,
+                cart: carts,
               })}>
             <Text color="white" variant="label">Proceed to Checkout</Text>
             <Arrow name="up" />
