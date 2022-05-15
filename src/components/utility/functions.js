@@ -38,3 +38,18 @@ export const strToUpper = (arg) => {
 export const strToLower = (arg) => {
 	return arg.toLowerCase();
 };
+
+export const format = (num, decimal='', check='') => {
+	decimal = decimal == '' ? 0 : 2;
+	return(
+			num != null
+			?
+					check != ''
+					?
+					num.toFixed(decimal).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+					:
+					parseInt(num).toFixed(decimal).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+			:
+			0
+	);
+}

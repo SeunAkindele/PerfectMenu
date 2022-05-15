@@ -16,14 +16,17 @@ export const MenuContextProvider = ({ children }) => {
     const inputs = {
       page: 'getItems'
     }
-
+    
+    
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(strlen(response['data']) > 0){
           setMenu(response['data'])
           setMenuBackUp(response['data']);
+          setLoading(false);
         } else {
           setMenu(null);
+          setLoading(false);
         }
       } else {
         alert(response['data'])
@@ -39,8 +42,10 @@ export const MenuContextProvider = ({ children }) => {
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
         setCartNum(response['data'])
+        setLoading(false);
       } else {
         alert(response['data'])
+        setLoading(false);
       }
     });
   }
@@ -51,7 +56,6 @@ export const MenuContextProvider = ({ children }) => {
     menuBackUp,
     setMenu,
     loading,
-    setLoading,
     getCartNum,
     cartNum
   }}>{children}</MenuContext.Provider>;

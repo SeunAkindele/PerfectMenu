@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import {View, Image} from "react-native";
 import { Card } from "react-native-paper";
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign, Ionicons} from "@expo/vector-icons";
 
 export const ArrowLeft = styled(AntDesign)`
 color: ${(props) => props.theme.colors.text.error};
@@ -29,6 +29,13 @@ export const Info = styled(View)`
   align-items: center;
   justify-content: space-between;
   padding: ${(props) => props.theme.space[2]};
+`;
+
+export const IconInverse = styled(Ionicons)`
+  font-size: 50px;
+  color: ${(props) => props.theme.colors.text.disabled};
+  border-radius: 100px;
+  margin-right: ${(props) => props.theme.space[2]};
 `;
 
 export const Icon = styled(Image)`

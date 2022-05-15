@@ -49,7 +49,7 @@ export const MenuDetailScreen = ({ route, navigation }) => {
             ))}
           </Rating>
           <Spacer position="bottom" size="small" />
-          <Text>Rate {ucFirst(menu.name)}</Text>
+          <Text variant="caption">Rate {ucFirst(menu.name)}</Text>
         </Spacer>
 
       </ScrollView>

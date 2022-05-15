@@ -5,6 +5,7 @@ import open from "../../../../../assets/open";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
 import {MenuCard, MenuCardCover, Address, Info, Rating, Section, SectionEnd} from "./menu-info-card.styles";
+import { format } from "../../../../components/utility/functions";
 
 export const MenuInfoCard = ({ menu: {id, name, image, disabled_status, rating = 4, price} }) => {
 
@@ -32,7 +33,7 @@ export const MenuInfoCard = ({ menu: {id, name, image, disabled_status, rating =
             </Spacer>
           </SectionEnd>
         </Section>
-        <Address>{price}</Address>
+        <Address>₦{format(price, 2)}</Address>
       </Info>
     </MenuCard>
   );

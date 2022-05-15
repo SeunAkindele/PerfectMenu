@@ -21,14 +21,6 @@ export const MenuIcon = styled(Avatar.Icon).attrs({
   background-color: ${(props) => props.bg || props.theme.colors.brand.primary};
 `;
 
-export const ErrorContainer = styled(View)`
-  max-width: 300px;
-  align-items: center;
-  align-self: center;
-  margin-top: ${(props) => props.theme.space[2]};
-  margin-bottom: ${(props) => props.theme.space[2]};
-`;
-
 export const Cart = styled(AntDesign)`
   font-size: ${(props) => props.theme.fontSizes.h5};
   position: absolute;

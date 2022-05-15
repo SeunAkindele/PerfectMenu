@@ -3,12 +3,6 @@ import {View, TouchableOpacity, FlatList} from "react-native";
 import { Avatar } from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 
-export const CartContainer = styled(View)`
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-`;
-
 export const CartIcon = styled(Avatar.Icon).attrs({
   size: 128,
 })`

@@ -29,14 +29,35 @@ export const CartSummaryTotal = styled(View)`
   background-color: ${(props) => props.theme.colors.ui.disabled};
   padding: ${(props) => props.theme.space[2]};
   padding-bottom: ${(props) => props.theme.space[3]};
+  padding-top: ${(props) => props.theme.space[3]};
 `;
 
-export const Checkout = styled(View)`
+export const CartSummarySubTotal = styled(View)`
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  background-color: ${(props) => props.theme.colors.ui.disabled};
+  padding: ${(props) => props.theme.space[2]};
+`;
+
+export const Online = styled(TouchableOpacity)`
   justify-content: center;
   flex-direction: row;
   align-items: center;
   height: 50px;
   background-color: ${(props) => props.theme.colors.ui.success};
+  padding: ${(props) => props.theme.space[2]};
+  padding-bottom: ${(props) => props.theme.space[3]};
+`;
+
+export const Offline = styled(TouchableOpacity)`
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  
+  height: 50px;
+  background-color: ${(props) => props.theme.colors.brand.primary};
   padding: ${(props) => props.theme.space[2]};
   padding-bottom: ${(props) => props.theme.space[3]};
 `;

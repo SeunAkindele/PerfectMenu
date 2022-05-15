@@ -1,29 +1,46 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
-import {Icon, CartCard, Info, LeftInfo, RightInfo, ArrowLeft, ArrowRight, Trash} from "./cart-info-card.styles";
+import { format } from "../../../../components/utility/functions";
+import { CartContext } from "../../context/cart.context";
+import {Icon, IconInverse, CartCard, Info, LeftInfo, RightInfo, ArrowLeft, ArrowRight, Trash} from "./cart-info-card.styles";
 
-export const CartInfoCard = ({ cart = {} }) => {
-  const {name = 'Zuni Café', qty = 1000, price = 3650, icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png", photos = [
-    "https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-oranges-ice-600x750.jpg",
-  ]} = cart;
+export const CartInfoCard = ({ cart: {id, name, qty, amount, image, item_id}, loadCart }) => {
+  const { updateCart, deleteCart } = useContext(CartContext);
 
   return (
     <CartCard elevation={5}>
       <Info>
         <LeftInfo>
-          <Icon source={{ uri: photos[0]}} />
-          <Text variant="tag">{name}</Text>
-          <ArrowLeft onPress={() => alert("reduce")} name = "left"/>
-          <Text variant="caption">{qty}</Text>
-          <ArrowRight onPress={() => alert("increase")} name = "right"/>
+          {
+            !loadCart ?
+            <Icon source={{ uri: `http://localhost/PerfectMenuApi/vendor/images/${image}`}} />
+            : <IconInverse name="ios-ellipsis-horizontal-circle"/>
+          }
+          
+          <Text variant="tag">{!loadCart ? name : '--- ---'}</Text>
+          {
+            !loadCart
+            &&
+            <>
+              <ArrowLeft onPress={() => qty > 1 ? updateCart(item_id, "minus") : deleteCart(id, item_id)} name = "left"/>
+              <Text variant="caption">{!loadCart ? qty : '---'}</Text>
+              <ArrowRight onPress={() => updateCart(item_id)} name = "right"/>
+            </>
+          }
         </LeftInfo>
         <RightInfo>
           <Spacer position="right" size="large">
-            <Text variant="caption">{price}</Text>
+            <Text variant="caption">{!loadCart ? `₦${format(amount)}` : '---'}</Text>
           </Spacer>
           <Spacer position="right" size="small">
-            <Trash onPress={() => alert("deleted")} name="closecircle" />
+            {
+              !loadCart ? 
+              <Trash onPress={() => deleteCart(id, item_id)} name="closecircle" />
+              : 
+              <Text variant="label">--</Text>
+            }
+            
           </Spacer>
         </RightInfo>
       </Info>
