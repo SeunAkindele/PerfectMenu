@@ -23,13 +23,13 @@ export const MenuContextProvider = ({ children }) => {
         if(strlen(response['data']) > 0){
           setMenu(response['data'])
           setMenuBackUp(response['data']);
-          setLoading(false);
         } else {
           setMenu(null);
-          setLoading(false);
         }
+        setLoading(false);
       } else {
-        alert(response['data'])
+        alert(response['data']);
+        setLoading(false);
       }
     });
   }

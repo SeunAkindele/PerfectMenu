@@ -1,5 +1,6 @@
 import React, {useState, createContext, useContext} from "react";
 import { api } from "../../../api/api";
+import { strlen } from "../../../components/utility/functions";
 import { LoginContext } from "../../account/context/login.context";
 
 export const OrderContext = createContext();
@@ -9,7 +10,8 @@ export const OrderContextProvider = ({ children }) => {
   const {token} = useContext(LoginContext);
 
   const [order, setOrder] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [pending, setPending] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const payOnDelivery = (deliveryFee, navigation) => {
     const inputs = {
@@ -17,6 +19,7 @@ export const OrderContextProvider = ({ children }) => {
       delivery: deliveryFee
     }
     
+    setLoading(true);
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
         setLoading(false);
@@ -36,8 +39,13 @@ export const OrderContextProvider = ({ children }) => {
     
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
+        if(strlen(response['data']['data']) > 0){
+          setOrder(response['data']['data']);
+          setPending(response['data']['pending']);
+        } else {
+          setOrder(null);
+        }
         setLoading(false);
-        setOrder(response['data'])
       } else {
         alert(response['data'])
         setLoading(false);
@@ -49,6 +57,7 @@ export const OrderContextProvider = ({ children }) => {
     order,
     payOnDelivery,
     getOrder,
+    pending,
     loading
   }}>{children}</OrderContext.Provider>;
 }

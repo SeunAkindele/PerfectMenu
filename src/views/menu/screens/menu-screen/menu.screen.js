@@ -91,14 +91,11 @@ export const MenuScreen = ({ navigation }) => {
             refreshing={loading}
             renderItem={({ item }) => (
               <ErrorContainer>
-             
-                  <Spacer position="bottom" size="large">
-                    <Text variant="error">No Data Yet</Text>
-                  </Spacer>
-                  <MenuIcon bg="#ccc" icon="cart-off" />
-                
-             
-            </ErrorContainer>
+                <Spacer position="bottom" size="large">
+                  <Text variant="error">No Data Yet</Text>
+                </Spacer>
+                <MenuIcon bg="#ccc" icon="cart-off" />
+              </ErrorContainer>
             )}
           />
        } 

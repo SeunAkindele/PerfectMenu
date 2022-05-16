@@ -1,26 +1,27 @@
 import React from "react";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
+import { format } from "../../../../components/utility/functions";
 import {OrderCard, Info, LeftInfo, RightInfo, Eye, Trash, Check} from "./order-info-card.styles";
 
-export const OrderInfoCard = ({ order = {} }) => {
-  const {price = 3650, icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png", photos = [
-    "https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-oranges-ice-600x750.jpg",
-  ]} = order;
+export const OrderInfoCard = ({ order: {amount, id, status} }) => {
 
   return (
-    <>
-    <OrderCard elevation={5}>
+  <>
+  {    
+  status == 2
+    &&  
+    <OrderCard elevation={5} key={id}>
       <Info>
         <LeftInfo>
-          <Text variant="tag">Order total</Text>
+          <Text variant="caption">Order total</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{price}</Text>
+            <Text variant="caption">{format(amount)}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
           <Spacer position="right" size="large">
-            <Text variant="caption" color="orange" >Pending...</Text>
+            <Text variant="caption" color="orange" >Pending</Text>
           </Spacer>
           <Spacer position="right" size="small">
             <Eye name="eyeo" />
@@ -31,13 +32,16 @@ export const OrderInfoCard = ({ order = {} }) => {
         </RightInfo>
       </Info>
     </OrderCard>
-    <Spacer position="top" size="large" />
-    <OrderCard elevation={5}>
+}
+{
+    status == 1
+    &&
+    <OrderCard elevation={5} key={id}>
       <Info>
         <LeftInfo>
-          <Text variant="tag">Order total</Text>
+          <Text variant="caption">Order total</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{price}</Text>
+            <Text variant="caption">{format(amount, 2)}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -53,13 +57,16 @@ export const OrderInfoCard = ({ order = {} }) => {
         </RightInfo>
       </Info>
     </OrderCard>
-    <Spacer position="top" size="large" />
-    <OrderCard elevation={5}>
+}
+{
+  status == 0
+  &&
+  <OrderCard elevation={5} key={id}>
       <Info>
         <LeftInfo>
-          <Text variant="tag">Order total</Text>
+          <Text variant="caption">Order total</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{price}</Text>
+            <Text variant="caption">{format(amount)}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -72,13 +79,16 @@ export const OrderInfoCard = ({ order = {} }) => {
         </RightInfo>
       </Info>
     </OrderCard>
-    <Spacer position="top" size="large" />
-    <OrderCard elevation={5}>
+}
+{
+  status == 3
+  &&
+  <OrderCard elevation={5} key={id}>
       <Info>
         <LeftInfo>
-          <Text variant="tag">Order total</Text>
+          <Text variant="caption">Order total</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{price}</Text>
+            <Text variant="caption">{format(amount)}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -91,6 +101,7 @@ export const OrderInfoCard = ({ order = {} }) => {
         </RightInfo>
       </Info>
     </OrderCard>
-    </>
+}
+  </>
   );
 }
