@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import {FlatList, View, Text} from "react-native";
+import {FlatList, View, Pressable, Text} from "react-native";
 import { Avatar } from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 
@@ -30,7 +30,7 @@ export const Cart = styled(AntDesign)`
   color: ${(props) => props.theme.colors.ui.error};
 `;
 
-export const CartCount = styled(View)`
+export const CartCount = styled(Pressable)`
   position: absolute;
   border-radius: 100px;
   height: 20px;

@@ -48,10 +48,10 @@ export const MenuScreen = ({ navigation }) => {
       <SearchContainer>
         <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
       </SearchContainer>
-      <Cart name="shoppingcart" />
+      <Cart onPress={() => navigation.navigate("Cart")} name="shoppingcart" />
       {cartNum > 0
         &&
-        <CartCount>
+        <CartCount onPress={() => navigation.navigate("Cart")}>
           <CartCountText>{loadCart ? '---' : cartNum}</CartCountText>
         </CartCount>}
       {loading 

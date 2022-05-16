@@ -23,19 +23,21 @@ export const LoginContextProvider = ({ children }) => {
     }
 
     setLoading(true);
-    api("login", {request: inputs}, "", response => {
-      
-      if(response['success'] === true) {
-        setToken(response['data']['token']);
-        setUser(response['data']);
-        setAuthorization(response['data']['type']);
-        setIsAuthenticated(true);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        alert(response['data']);
-      }
-    });
+    setTimeout(() => {
+      api("login", {request: inputs}, "", response => {
+        if(response['success'] === true) {
+          setToken(response['data']['token']);
+          setUser(response['data']);
+          setAuthorization(response['data']['type']);
+          setIsAuthenticated(true);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          alert(response['data']);
+        }
+      });
+      setLoading(false);
+    }, 2000);
   }
 
   const onLogout = () => {

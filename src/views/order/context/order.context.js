@@ -20,6 +20,7 @@ export const OrderContextProvider = ({ children }) => {
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
         setLoading(false);
+        navigation.goBack();
         navigation.navigate("Order");
       } else {
         alert(response['data'])
