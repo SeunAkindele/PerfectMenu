@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
+import React, {useContext, useState, useEffect} from 'react';
+// import { useFocusEffect } from '@react-navigation/native';
+import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import { OrderContainer, OrderIcon, OrderList, OrderHistory, Arrow, Progress, Refresh } from './order-screen.styles';
+import {  OrderIcon, OrderList, OrderHistory, Arrow, Progress, Refresh } from './order-screen.styles';
 import {Text} from "../../../../components/typography/text.component";
 import { OrderInfoCard } from "../../components/order-info-card/order-info-card.component";
 import { OrderContext } from "../../context/order.context";
@@ -18,14 +18,12 @@ export const OrderScreen = ({navigation}) => {
   const { order, getOrder, loading, pending } = useContext(OrderContext);
   const [loadOrder, setLoadOrder] = useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setTimeout(() => { 
-        getOrder();
-        load();
-      }, 2000);
-    }, [])
-  );
+  useEffect(() => {
+    setTimeout(() => { 
+      getOrder();
+      load();
+    }, 2000);
+  }, []);
 
   const load = () => {
     if(pending.includes("2")){
@@ -49,7 +47,7 @@ export const OrderScreen = ({navigation}) => {
     if(time > 0){
       setTimeout(countDown, 1000);
     } else {
-      getOrder();
+      reload();
       load();
     }
   } 
@@ -71,20 +69,18 @@ export const OrderScreen = ({navigation}) => {
             data={order}
             onRefresh={reload}
             refreshing={loading}
-            renderItem={({ item }) => (
-              
-                <TouchableOpacity onPress={() => navigation.navigate("OrderDetails", {
-                  item: item,
-                })} key={item.id}>
-                  <Spacer position="bottom" size="large" key={item.id}>
-                  <FadeInView>
-                    <OrderInfoCard order={item} loadOrder={loadOrder} />
-                  </FadeInView>
-                  </Spacer>
-                </TouchableOpacity>
-            
-            )}
             keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => navigation.navigate("OrderDetails", {
+                  item: item,
+              })} key={item.id}>
+                <Spacer position="bottom" size="large">
+                  <FadeInView>
+                    <OrderInfoCard item={item} loadOrder={loadOrder} />
+                  </FadeInView>
+                </Spacer>
+              </TouchableOpacity>
+            )}
           />
           {pending.includes("2") &&
           <>
@@ -100,6 +96,7 @@ export const OrderScreen = ({navigation}) => {
           data={[{id: 1}]}
           onRefresh={reload}
           refreshing={loading}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <ErrorContainer>
               <Spacer position="bottom" size="large">
@@ -108,9 +105,13 @@ export const OrderScreen = ({navigation}) => {
               <OrderIcon bg="#ccc" icon="close" />
             </ErrorContainer>
           )}
-          keyExtractor={(item) => item.id}
         />
         
+      }
+      {
+        order == ""
+        &&
+        <View style={{flex: 1}}></View>
       }
        <OrderHistory onPress={() => navigation.navigate("OrderHistory")}>
             <Text color="white" variant="label">Past Orders</Text>

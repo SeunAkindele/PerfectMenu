@@ -1,20 +1,21 @@
 import React, {useContext} from "react";
+import { Alert } from "react-native";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
 import { format } from "../../../../components/utility/functions";
 import { OrderContext } from "../../context/order.context";
 import {OrderCard, Info, LeftInfo, RightInfo, Eye, Trash, Check} from "./order-info-card.styles";
 
-export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder }) => {
+export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
 
-  const {cancleOrder} = useContext(OrderContext);
-
+  const {cancleOrder, confirmDelivery} = useContext(OrderContext);
+  
   return (
   <>
   {    
   status == 2
     &&  
-    <OrderCard elevation={5} key={id}>
+    <OrderCard elevation={5} key={token}>
       <Info>
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
@@ -30,7 +31,20 @@ export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder })
             {!loadOrder ? <Eye name="eyeo" /> : <Text>---</Text>}
           </Spacer>
           <Spacer position="right" size="small">
-          {!loadOrder ? <Trash onPress={() => cancleOrder(token)} name="closecircle" /> : <Text>---</Text>}
+          {!loadOrder ? <Trash onPress={() => {
+            Alert.alert(
+              "Cancle Order",
+              "Are you sure?",
+              [
+                {
+                  text: "Cancel",
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => cancleOrder(token)}
+              ],
+              { cancelable: false }
+            );
+          }} name="closecircle" /> : <Text>---</Text>}
           </Spacer>
         </RightInfo>
       </Info>
@@ -39,7 +53,7 @@ export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder })
 {
     status == 1
     &&
-    <OrderCard elevation={5} key={id}>
+    <OrderCard elevation={5} key={token}>
       <Info>
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
@@ -55,7 +69,20 @@ export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder })
             {!loadOrder ? <Eye name="eyeo" /> : <Text>---</Text>}
           </Spacer>
           <Spacer position="right" size="small">
-          {!loadOrder ? <Check onPress={() => alert("deleted")} name="checkcircle" /> : <Text>---</Text>}
+          {!loadOrder ? <Check onPress={() => {
+             Alert.alert(
+              "Confirm Delivery",
+              "Are you sure?",
+              [
+                {
+                  text: "Cancel",
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => confirmDelivery(token)}
+              ],
+              { cancelable: false }
+            );
+          }} name="checkcircle" /> : <Text>---</Text>}
           </Spacer>
         </RightInfo>
       </Info>
@@ -64,7 +91,7 @@ export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder })
 {
   status == 0
   &&
-  <OrderCard elevation={5} key={id}>
+  <OrderCard elevation={5} key={token}>
       <Info>
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
@@ -86,7 +113,7 @@ export const OrderInfoCard = ({ order: {amount, id, status, token}, loadOrder })
 {
   status == 3
   &&
-  <OrderCard elevation={5} key={id}>
+  <OrderCard elevation={5} key={token}>
       <Info>
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>

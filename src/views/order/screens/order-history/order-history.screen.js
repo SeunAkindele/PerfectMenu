@@ -13,11 +13,13 @@ export const OrderHistoryScreen = ({navigation}) => {
 
   const { order } = useContext(OrderContext);
  
-  // useEffect(() => load(), []);
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <SafeArea>
-      {order === "" 
+      {/* {order === "" 
       ? <OrderContainer>
           <OrderIcon bg="#ccc" icon="close" />
           <Text>No orders yet!</Text>
@@ -34,14 +36,14 @@ export const OrderHistoryScreen = ({navigation}) => {
                 <TouchableOpacity onPress={() => navigation.navigate("OrderDetails", {
                   order: order,
                 })}>
-                  <OrderInfoCard order={item} />
+                  <OrderInfoCard item={item} />
                 </TouchableOpacity>
               </Spacer>
             )}
             keyExtractor={(item) => item.name}
           />
         </>
-      }
+      } */}
     </SafeArea>
   )
 };

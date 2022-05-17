@@ -58,7 +58,25 @@ export const OrderContextProvider = ({ children }) => {
       page: 'cancleOrder',
       token: orderToken
     }
+    setLoading(true);
+    api("order", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getOrder();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const confirmDelivery = (orderToken) => {
     
+    const inputs = {
+      page: 'confirmDelivery',
+      token: orderToken
+    }
+    setLoading(true);
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getOrder();
@@ -76,6 +94,7 @@ export const OrderContextProvider = ({ children }) => {
     getOrder,
     pending,
     loading,
+    confirmDelivery,
     cancleOrder
   }}>{children}</OrderContext.Provider>;
 }
