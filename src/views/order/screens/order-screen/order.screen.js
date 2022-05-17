@@ -16,6 +16,7 @@ export const OrderScreen = ({navigation}) => {
   const [time, setTime] = useState(0);
 
   const { order, getOrder, loading, pending } = useContext(OrderContext);
+  const [loadOrder, setLoadOrder] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,7 +34,11 @@ export const OrderScreen = ({navigation}) => {
   }
 
   const reload = () => {
-    getOrder();
+    setLoadOrder(true);
+      setTimeout(() => { 
+        getOrder();
+        setLoadOrder(false);
+      }, 2000);
   }
 
   const countDown = () => {
@@ -73,7 +78,7 @@ export const OrderScreen = ({navigation}) => {
                 })} key={item.id}>
                   <Spacer position="bottom" size="large" key={item.id}>
                   <FadeInView>
-                    <OrderInfoCard order={item} />
+                    <OrderInfoCard order={item} loadOrder={loadOrder} />
                   </FadeInView>
                   </Spacer>
                 </TouchableOpacity>

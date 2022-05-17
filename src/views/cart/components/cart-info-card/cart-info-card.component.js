@@ -40,7 +40,6 @@ export const CartInfoCard = ({ cart: {id, name, qty, amount, image, item_id}, lo
               : 
               <Text variant="label">--</Text>
             }
-            
           </Spacer>
         </RightInfo>
       </Info>

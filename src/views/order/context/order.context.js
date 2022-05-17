@@ -53,11 +53,29 @@ export const OrderContextProvider = ({ children }) => {
     });
   }
 
+  const cancleOrder = (orderToken) => {
+    const inputs = {
+      page: 'cancleOrder',
+      token: orderToken
+    }
+    
+    api("order", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getOrder();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   return <OrderContext.Provider value={{
     order,
     payOnDelivery,
     getOrder,
     pending,
-    loading
+    loading,
+    cancleOrder
   }}>{children}</OrderContext.Provider>;
 }
