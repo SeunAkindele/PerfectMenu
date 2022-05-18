@@ -5,7 +5,8 @@ import { Underline } from '../../../../components/underline/underline';
 import { Spacer } from '../../../../components/spacer/spacer.component';
 import { OrderSummaryContainer, OrderSummaryList, OrderSummaryWrapper, OrderSummaryTotal } from './order-details.screen.styles';
 import { Text } from '../../../../components/typography/text.component';
-import { format } from '../../../../components/utility/functions';
+import { format, readableDate } from '../../../../components/utility/functions';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export const OrderDetailsScreen = ({route}) => {
   const {item} = route.params;
@@ -18,14 +19,18 @@ export const OrderDetailsScreen = ({route}) => {
         <ScrollView>
           <OrderSummaryWrapper>
             <Spacer position="left" size="medium">
-              <Text variant="tag">ORDER: {token}</Text>
+              <Text variant="tag">ORDER: #{token}</Text>
             </Spacer>
             <Spacer position="bottom" size="medium" />
+            <OrderSummaryList>
+                <Text variant="tag"><FontAwesome5 name="calendar-alt" />  {readableDate(item.date)}</Text>
+            </OrderSummaryList>
+            <Underline />
             <Spacer position="bottom" size="large" />
             {
               order.map((item, i) =>
                 <OrderSummaryList key={i}>
-                  <Text variant="tag">{item.name}  ({item.qty} x {format(item.price)})</Text>
+                  <Text variant="tag">{item.name}  ({item.qty} x ₦{format(item.price)})</Text>
                   <Text variant="tag">₦{format(item.amount)}</Text>
                 </OrderSummaryList>
               )

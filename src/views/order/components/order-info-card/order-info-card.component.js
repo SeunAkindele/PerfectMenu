@@ -2,11 +2,11 @@ import React, {useContext} from "react";
 import { Alert } from "react-native";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
-import { format } from "../../../../components/utility/functions";
+import { format, readableDate } from "../../../../components/utility/functions";
 import { OrderContext } from "../../context/order.context";
 import {OrderCard, Info, LeftInfo, RightInfo, Eye, Trash, Check} from "./order-info-card.styles";
-
-export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
+import { FontAwesome5 } from '@expo/vector-icons';
+export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }) => {
 
   const {cancleOrder, confirmDelivery} = useContext(OrderContext);
   
@@ -20,8 +20,9 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{!loadOrder ? format(amount) : '---'}</Text>
+            <Text variant="caption">{!loadOrder ? `₦${format(amount)}` : '---'}</Text>
           </Spacer>
+          
         </LeftInfo>
         <RightInfo>
           <Spacer position="right" size="large">
@@ -48,6 +49,14 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
           </Spacer>
         </RightInfo>
       </Info>
+      <Spacer position="left" size="medium">
+        <Text variant="small">
+          {!loadOrder ? `Token: ${token}      ` : '---'}
+          {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
+          {!loadOrder ? `    ${readableDate(date)}` : '---'}
+        </Text>
+      </Spacer>
+      <Spacer position="top" size="large"/>
     </OrderCard>
 }
 {
@@ -58,7 +67,7 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{!loadOrder ? format(amount) : '---'}</Text>
+          <Text variant="caption">{!loadOrder ? `₦${format(amount)}` : '---'}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -86,6 +95,14 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
           </Spacer>
         </RightInfo>
       </Info>
+      <Spacer position="left" size="medium">
+        <Text variant="small">
+          {!loadOrder ? `Token: ${token}      ` : '---'}
+          {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
+          {!loadOrder ? `    ${readableDate(date)}` : '---'}
+        </Text>
+      </Spacer>
+      <Spacer position="top" size="large"/>
     </OrderCard>
 }
 {
@@ -96,7 +113,7 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{!loadOrder ? format(amount) : '---'}</Text>
+          <Text variant="caption">{!loadOrder ? `₦${format(amount)}` : '---'}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -108,6 +125,14 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
           </Spacer>
         </RightInfo>
       </Info>
+      <Spacer position="left" size="medium">
+        <Text variant="small">
+          {!loadOrder ? `Token: ${token}      ` : '---'}
+          {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
+          {!loadOrder ? `    ${readableDate(date)}` : '---'}
+        </Text>
+      </Spacer>
+      <Spacer position="top" size="large"/>
     </OrderCard>
 }
 {
@@ -118,7 +143,7 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
         <LeftInfo>
           <Text variant="caption">{!loadOrder ? 'Order total' : '---'}</Text>
           <Spacer position="left" size="large">
-            <Text variant="caption">{!loadOrder ? format(amount) : '---'}</Text>
+          <Text variant="caption">{!loadOrder ? `₦${format(amount)}` : '---'}</Text>
           </Spacer>
         </LeftInfo>
         <RightInfo>
@@ -130,6 +155,15 @@ export const OrderInfoCard = ({ item: {amount, status, token}, loadOrder }) => {
           </Spacer>
         </RightInfo>
       </Info>
+      <Spacer position="left" size="medium">
+      <Text variant="small">
+          {!loadOrder ? `Token: ${token}      ` : '---'}
+          {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
+          {!loadOrder ? `    ${readableDate(date)}` : '---'}
+        </Text>
+      </Spacer>
+      <Spacer position="top" size="large" />
+     
     </OrderCard>
 }
   </>

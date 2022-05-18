@@ -19,6 +19,7 @@ export const Info = styled(View)`
   align-items: center;
   justify-content: space-between;
   padding: ${(props) => props.theme.space[2]};
+  padding-bottom: 0;
 `;
 
 export const Icon = styled(Image)`

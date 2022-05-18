@@ -38,6 +38,11 @@ const tag = (theme) => `
     font-weight: ${theme.fontWeights.medium};
 `;
 
+const small = (theme) => `
+font-family: ${theme.fonts.heading};
+font-size: ${theme.fontSizes.small};
+`;
+
 const white = (theme) => `
   color: ${theme.colors.text.inverse};
 `;
@@ -72,6 +77,7 @@ const variants = {
   hint,
   tag,
   title,
+  small,
 };
 
 const colors = {

@@ -99,10 +99,11 @@ export const OrderScreen = ({navigation}) => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <ErrorContainer>
-              <Spacer position="bottom" size="large">
-                <Text>No orders yet!</Text>
-              </Spacer>
               <OrderIcon bg="#ccc" icon="close" />
+              <Spacer position="bottom" size="large">
+                <Text>No orders today yet!</Text>
+                <Text>Drag down to Refresh</Text>
+              </Spacer>
             </ErrorContainer>
           )}
         />

@@ -53,3 +53,11 @@ export const format = (num, decimal='', check='') => {
 			0
 	);
 }
+
+export const readableDate = (date) => {
+	const spl = date.split("-");
+	const day = spl[2];
+	const month = spl[1];
+	const year = spl[0];
+	return `${day}-${month}-${year}`;
+};
