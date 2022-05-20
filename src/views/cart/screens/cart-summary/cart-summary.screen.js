@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { Underline } from '../../../../components/underline/underline';
 import { Spacer } from '../../../../components/spacer/spacer.component';
@@ -7,17 +7,22 @@ import { CartSummaryContainer, CartSummaryList, CartSummaryWrapper, CartSummaryT
 import { Text } from '../../../../components/typography/text.component';
 import { format } from '../../../../components/utility/functions';
 import { OrderContext } from '../../../order/context/order.context';
+import {Paystack} from "react-native-paystack-webview";
+import { LoginContext } from '../../../account/context/login.context';
 
 export const CartSummaryScreen = ({route, navigation}) => {
 
-  const {payOnDelivery} = useContext(OrderContext);
+  const {payOnDelivery, payOnline} = useContext(OrderContext);
+  const {user: {email, name, phone}} = useContext(LoginContext);
+  
+  const [paymentStatus, setPaymentStatus] = useState(false);
 
   const { cart, total, vat } = route.params;
 
   const delivery = 1000;
-  
   const salesSum = parseInt(total) + parseInt(vat) + delivery;
-
+  // paystackKey="pk_live_04d2b73eb0fc1294e0b10b5c7910768811f45030"
+  // paystackSecretKey="sk_live_e0afb4192de32c435c200fc206484e0f51602740"
   return (
     <SafeArea>
       <CartSummaryContainer>
@@ -57,10 +62,33 @@ export const CartSummaryScreen = ({route, navigation}) => {
               <Text variant="tag">₦{format(salesSum)}</Text>
             </CartSummaryTotal>
             <Spacer position="top" size="medium" />
-            <Online onPress={() =>  null}>
+            <Online onPress={() => setPaymentStatus(true)}>
               <Text variant="tag" color="white">Pay Now</Text>
             </Online>
-           
+
+            {
+              paymentStatus 
+              &&
+              <Paystack  
+                paystackKey="pk_test_6f3f86bd6f572cf197b3e66509c6988da6a27c4c"
+                paystackSecretKey="sk_test_d1971cb1c1406c636feef71eaba78f8c62c6851e"
+                amount={salesSum}
+                billingEmail={email}
+                billingMobile={phone}
+                billingName={name}
+                activityIndicatorColor="green"
+                onCancel={(e) => {
+                  alert(`Payment ${e.status}`);
+                  setPaymentStatus(false);
+                }}
+                onSuccess={(res) => {
+                  let onlineToken = res.data.transactionRef.reference;
+                  payOnline(delivery, navigation, onlineToken)
+                }}
+                autoStart={true}
+              />
+            }
+
             <Spacer position="top" size="medium" />
             <Offline onPress={() => payOnDelivery(delivery, navigation)}>
               <Text color="white" variant="tag">Pay on Delivery</Text>

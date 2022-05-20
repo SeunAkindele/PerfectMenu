@@ -7,6 +7,7 @@ import { MenuInfoCard } from "../../components/menu-info-card/menu-info-card.com
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { strlen, ucFirst } from "../../../../components/utility/functions";
 import { Text } from "../../../../components/typography/text.component";
+import starWhite from "../../../../../assets/star-white";
 import star from "../../../../../assets/star";
 import { CartContext } from "../../../cart/context/cart.context";
 
@@ -45,7 +46,10 @@ export const MenuDetailScreen = ({ route, navigation }) => {
           <Spacer position="top" size="large" />
           <Rating>
             {ratingArray.map((__,i) => (
-              <SvgXml key={i} onPress={() => alert(i + 1)} xml={star} width={30} height={30} />
+              <SvgXml key={i} onPress={() => alert(i + 1)} xml={star} width={25} height={25} />
+            ))}
+            {ratingArray.map((__,i) => (
+              <SvgXml key={i} onPress={() => alert(i + 1)} xml={starWhite} width={25} height={25} />
             ))}
           </Rating>
           <Spacer position="bottom" size="small" />

@@ -17,8 +17,28 @@ export const OrderContextProvider = ({ children }) => {
 
   const payOnDelivery = (deliveryFee, navigation) => {
     const inputs = {
-      page: 'deliveryFee',
+      page: 'payOnDelivery',
       delivery: deliveryFee
+    }
+    
+    setLoading(true);
+    api("order", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        setLoading(false);
+        navigation.goBack();
+        navigation.navigate("Order");
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const payOnline = (deliveryFee, navigation, onlineToken) => {
+    const inputs = {
+      page: 'payOnline',
+      delivery: deliveryFee,
+      onlineToken: onlineToken
     }
     
     setLoading(true);
@@ -115,6 +135,7 @@ export const OrderContextProvider = ({ children }) => {
   return <OrderContext.Provider value={{
     order,
     payOnDelivery,
+    payOnline,
     getOrder,
     getPastOrder,
     pastOrder,
