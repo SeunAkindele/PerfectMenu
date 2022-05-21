@@ -21,8 +21,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
 
   const delivery = 1000;
   const salesSum = parseInt(total) + parseInt(vat) + delivery;
-  // paystackKey="pk_live_04d2b73eb0fc1294e0b10b5c7910768811f45030"
-  // paystackSecretKey="sk_live_e0afb4192de32c435c200fc206484e0f51602740"
+ 
   return (
     <SafeArea>
       <CartSummaryContainer>

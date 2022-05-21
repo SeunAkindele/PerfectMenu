@@ -73,7 +73,7 @@ export const MenuScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => item.disabled_status == 0 ? navigation.navigate("MenuDetail", { menu: item }) : alert("This menu is unavailable for now.")} key={item.id}>
                 <Spacer position="bottom" size="large">
                   <FadeInView>
-                    <MenuInfoCard menu={item} loadCart={loadCart} />
+                    <MenuInfoCard menu={item} />
                   </FadeInView>
                 </Spacer>
               </TouchableOpacity>

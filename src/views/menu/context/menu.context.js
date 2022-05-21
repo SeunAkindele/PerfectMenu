@@ -11,6 +11,7 @@ export const MenuContextProvider = ({ children }) => {
   const [menu, setMenu] = useState([]);
   const [menuBackUp, setMenuBackUp] = useState([]);
   const [cartNum, setCartNum] = useState(0);
+  const [ratings, setRatings] = useState(0);
 
   const getMenu = () => {
     const inputs = {
@@ -50,6 +51,44 @@ export const MenuContextProvider = ({ children }) => {
     });
   }
 
+  const rateItem = (type, rate, id) => {
+    const inputs = {
+      page: 'rateItem',
+      type: type,
+      rate: rate,
+      itemId: id
+    }
+
+    api("item", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getRatings(id);
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const getRatings = (itemId) => {
+    const inputs = {
+      page: 'getRatings',
+      itemId: itemId
+    }
+    setLoading(true);
+    api("item", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          setRatings(response['data'][0]['rate'])
+        }
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   return <MenuContext.Provider value={{
     getMenu,
     menu,
@@ -57,6 +96,9 @@ export const MenuContextProvider = ({ children }) => {
     setMenu,
     loading,
     getCartNum,
-    cartNum
+    cartNum,
+    rateItem,
+    ratings,
+    getRatings
   }}>{children}</MenuContext.Provider>;
 }

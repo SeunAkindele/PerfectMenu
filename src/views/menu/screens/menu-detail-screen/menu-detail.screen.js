@@ -1,23 +1,35 @@
 import React, {useState, useContext} from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import{ SvgXml } from "react-native-svg";
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import { List } from "react-native-paper";
 import { OrderButton, Rating } from "./menu-detail-screen.styles";
 import { MenuInfoCard } from "../../components/menu-info-card/menu-info-card.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { strlen, ucFirst } from "../../../../components/utility/functions";
 import { Text } from "../../../../components/typography/text.component";
-import starWhite from "../../../../../assets/star-white";
-import star from "../../../../../assets/star";
+import starSilver from "../../../../../assets/star-silver";
+import starGold from "../../../../../assets/star-gold";
 import { CartContext } from "../../../cart/context/cart.context";
+import { MenuContext } from "../../context/menu.context";
 
 export const MenuDetailScreen = ({ route, navigation }) => {
 
   const [breakfastExpanded, setBreakfastExpanded] = useState(false);
   const { menu } = route.params;
-  const ratingArray = Array.from(new Array(Math.floor(5)));
 
   const {addToCart} = useContext(CartContext);
+  const {rateItem, ratings, getRatings, loading} = useContext(MenuContext);
+
+  const ratingArray = Array.from(new Array(Math.floor(ratings)));
+
+  const unratedArray = Array.from(new Array(Math.floor(5-ratings)));
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getRatings(menu.id);
+    }, [])
+  );
 
   return (
     <>
@@ -45,12 +57,24 @@ export const MenuDetailScreen = ({ route, navigation }) => {
          <Spacer position="left" size="large">
           <Spacer position="top" size="large" />
           <Rating>
-            {ratingArray.map((__,i) => (
-              <SvgXml key={i} onPress={() => alert(i + 1)} xml={star} width={25} height={25} />
-            ))}
-            {ratingArray.map((__,i) => (
-              <SvgXml key={i} onPress={() => alert(i + 1)} xml={starWhite} width={25} height={25} />
-            ))}
+            {
+              !loading
+              ?
+              <>
+                {ratingArray.map((__,i) => (
+                  <TouchableOpacity onPress={() => rateItem("gold", i + 1, menu.id)} key={i}>
+                    <SvgXml xml={starGold} width={25} height={25} />
+                  </TouchableOpacity>
+                ))}
+                {unratedArray.map((__,i) => (
+                  <TouchableOpacity onPress={() => rateItem("silver", i + 1, menu.id)} key={i}>
+                    <SvgXml xml={starSilver} width={25} height={25} />
+                  </TouchableOpacity>
+                ))}
+              </>
+              :
+              <Text>*****</Text>
+            }
           </Rating>
           <Spacer position="bottom" size="small" />
           <Text variant="caption">Rate {ucFirst(menu.name)}</Text>

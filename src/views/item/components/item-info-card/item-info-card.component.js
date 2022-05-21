@@ -1,6 +1,6 @@
 import React from "react";
 import{ SvgXml } from "react-native-svg";
-import star from "../../../../../assets/star";
+import starGold from "../../../../../assets/star-gold";
 import open from "../../../../../assets/open";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
@@ -20,7 +20,7 @@ export const ItemInfoCard = ({ item: {name, image, status, rating = 4, price} })
         <Section>
           <Rating>
             {ratingArray.map(() => (
-              <SvgXml xml={star} width={20} height={20} />
+              <SvgXml xml={starGold} width={20} height={20} />
             ))}
           </Rating>
           <SectionEnd>

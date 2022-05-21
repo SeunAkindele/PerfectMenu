@@ -61,9 +61,13 @@ export const OrderContextProvider = ({ children }) => {
     
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
-        if(strlen(response['data']['data']) > 0){
-          setOrder(response['data']['data']);
-          setPending(response['data']['pending']);
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setOrder(response['data']['data']);
+            setPending(response['data']['pending']);
+          } else {
+            setOrder(null);
+          }
         } else {
           setOrder(null);
         }
@@ -82,9 +86,13 @@ export const OrderContextProvider = ({ children }) => {
     setLoading(true);
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
-        if(strlen(response['data']['data']) > 0){
-          setPastOrder(response['data']['data']);
-          setPastOrderBackUp(response['data']['data']);
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setPastOrder(response['data']['data']);
+            setPastOrderBackUp(response['data']['data']);
+          } else {
+            setPastOrder(null);
+          }
         } else {
           setPastOrder(null);
         }
@@ -124,6 +132,7 @@ export const OrderContextProvider = ({ children }) => {
     api("order", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getOrder();
+        getPastOrder();
         setLoading(false);
       } else {
         alert(response['data'])

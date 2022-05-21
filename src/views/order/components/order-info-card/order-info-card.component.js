@@ -2,11 +2,12 @@ import React, {useContext} from "react";
 import { Alert } from "react-native";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
-import { format, readableDate } from "../../../../components/utility/functions";
+import { format, readableDate, ucFirst } from "../../../../components/utility/functions";
 import { OrderContext } from "../../context/order.context";
 import {OrderCard, Info, LeftInfo, RightInfo, Eye, Trash, Check} from "./order-info-card.styles";
 import { FontAwesome5 } from '@expo/vector-icons';
-export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }) => {
+
+export const OrderInfoCard = ({ item: {amount, status, token, date, pay_type}, loadOrder }) => {
 
   const {cancleOrder, confirmDelivery} = useContext(OrderContext);
   
@@ -54,6 +55,7 @@ export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }
           {!loadOrder ? `Token: ${token}      ` : '---'}
           {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
           {!loadOrder ? `    ${readableDate(date)}` : '---'}
+          {!loadOrder ? pay_type === 'online' ? `    Payment: Online` : '    Payment: On Delivery' : '---'}
         </Text>
       </Spacer>
       <Spacer position="top" size="large"/>
@@ -100,6 +102,7 @@ export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }
           {!loadOrder ? `Token: ${token}      ` : '---'}
           {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
           {!loadOrder ? `    ${readableDate(date)}` : '---'}
+          {!loadOrder ? pay_type === 'online' ? `    Payment: Online` : '    Payment: On Delivery' : '---'}
         </Text>
       </Spacer>
       <Spacer position="top" size="large"/>
@@ -130,6 +133,7 @@ export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }
           {!loadOrder ? `Token: ${token}      ` : '---'}
           {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
           {!loadOrder ? `    ${readableDate(date)}` : '---'}
+          {!loadOrder ? pay_type === 'online' ? `    Payment: Online` : '    Payment: On Delivery' : '---'}
         </Text>
       </Spacer>
       <Spacer position="top" size="large"/>
@@ -159,7 +163,7 @@ export const OrderInfoCard = ({ item: {amount, status, token, date}, loadOrder }
       <Text variant="small">
           {!loadOrder ? `Token: ${token}      ` : '---'}
           {!loadOrder ? <FontAwesome5 name="calendar-alt" />  : '---'}
-          {!loadOrder ? `    ${readableDate(date)}` : '---'}
+          {!loadOrder ? `    ${readableDate(date)}` : '---'} {!loadOrder ? pay_type === 'online' ? `    Payment: Online` : '    Payment: On Delivery' : '---'}
         </Text>
       </Spacer>
       <Spacer position="top" size="large" />
