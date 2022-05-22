@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { Underline } from '../../../../components/underline/underline';
 import { Spacer } from '../../../../components/spacer/spacer.component';
@@ -89,7 +89,20 @@ export const CartSummaryScreen = ({route, navigation}) => {
             }
 
             <Spacer position="top" size="medium" />
-            <Offline onPress={() => payOnDelivery(delivery, navigation)}>
+            <Offline onPress={() => {
+              Alert.alert(
+                "Pay on Delivery",
+                "Order now?",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => payOnDelivery(delivery, navigation)}
+                ],
+                { cancelable: false }
+              );
+            }}>
               <Text color="white" variant="tag">Pay on Delivery</Text>
             </Offline>
           </CartSummaryWrapper>

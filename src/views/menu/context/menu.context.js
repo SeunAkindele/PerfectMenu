@@ -7,7 +7,7 @@ export const MenuContext = createContext();
 
 export const MenuContextProvider = ({ children }) => {
   const {token} = useContext(LoginContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [menu, setMenu] = useState([]);
   const [menuBackUp, setMenuBackUp] = useState([]);
   const [cartNum, setCartNum] = useState(0);
@@ -76,10 +76,13 @@ export const MenuContextProvider = ({ children }) => {
       itemId: itemId
     }
     setLoading(true);
+    
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
-          setRatings(response['data'][0]['rate'])
+          setRatings(response['data'][0]['rate']);
+        } else {
+          setRatings(0);
         }
         setLoading(false);
       } else {

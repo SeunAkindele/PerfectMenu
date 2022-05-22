@@ -1,9 +1,9 @@
 import React, {useState, useContext} from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import{ SvgXml } from "react-native-svg";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { List } from "react-native-paper";
-import { OrderButton, Rating } from "./menu-detail-screen.styles";
+import { OrderButton, Rating, Progress, RatesProgress } from "./menu-detail-screen.styles";
 import { MenuInfoCard } from "../../components/menu-info-card/menu-info-card.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { strlen, ucFirst } from "../../../../components/utility/functions";
@@ -54,9 +54,12 @@ export const MenuDetailScreen = ({ route, navigation }) => {
             <Text>No ingredients</Text>
           </Spacer>
         }
+       
+        <Spacer position="right" size="large" />
          <Spacer position="left" size="large">
-          <Spacer position="top" size="large" />
+         <Spacer position="top" size="medium" />
           <Rating>
+          
             {
               !loading
               ?
@@ -78,6 +81,33 @@ export const MenuDetailScreen = ({ route, navigation }) => {
           </Rating>
           <Spacer position="bottom" size="small" />
           <Text variant="caption">Rate {ucFirst(menu.name)}</Text>
+          <Spacer position="top" size="medium" />
+          <RatesProgress>
+            <Text variant="label">1</Text>
+            <Progress progress={menu.ratings.one} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
+            <RatesProgress>
+            <Text variant="label">2</Text>
+            <Progress progress={menu.ratings.two} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
+            <RatesProgress>
+            <Text variant="label">3</Text>
+            <Progress progress={menu.ratings.three} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
+            <RatesProgress>
+            <Text variant="label">4</Text>
+            <Progress progress={menu.ratings.four} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
+            <RatesProgress>
+            <Text variant="label">5</Text>
+            <Progress progress={menu.ratings.five} />
+          </RatesProgress>
+          
+          <Spacer position="bottom" size="large" />
         </Spacer>
 
       </ScrollView>

@@ -7,9 +7,7 @@ import { Text } from "../../../../components/typography/text.component";
 import {MenuCard, MenuCardCover, Address, Info, Rating, Section, SectionEnd} from "./menu-info-card.styles";
 import { format } from "../../../../components/utility/functions";
 
-export const MenuInfoCard = ({ menu: {id, name, image, disabled_status, rating = 5, price} }) => {
-
-  const ratingArray = Array.from(new Array(Math.floor(rating)));
+export const MenuInfoCard = ({ menu: {id, name, image, disabled_status, rates, price} }) => {
 
   return (
     <MenuCard elevation={5} key={id}>
@@ -18,10 +16,9 @@ export const MenuInfoCard = ({ menu: {id, name, image, disabled_status, rating =
         <Text variant="label">{name}</Text>
         <Section>
           <Rating>
-            {ratingArray.map((__, i) => (
-             <SvgXml key={i} xml={starGold} width={20} height={20} /> 
-            ))}
-            
+            <SvgXml xml={starGold} width={20} height={20} />
+            <Spacer position="left" size="small" />
+            <Text variant="label">{rates.toFixed(1)}</Text>
           </Rating>
           <SectionEnd>
             {disabled_status == 1 && (
