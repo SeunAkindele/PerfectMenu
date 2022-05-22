@@ -16,8 +16,7 @@ export const MenuContextProvider = ({ children }) => {
   const getMenu = () => {
     const inputs = {
       page: 'getItems'
-    }
-    
+    }  
     
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
@@ -63,6 +62,7 @@ export const MenuContextProvider = ({ children }) => {
       if(response['success'] === true) {
         getRatings(id);
         setLoading(false);
+        alert(`You rated this menu ${rate}`)
       } else {
         alert(response['data'])
         setLoading(false);
@@ -75,8 +75,8 @@ export const MenuContextProvider = ({ children }) => {
       page: 'getRatings',
       itemId: itemId
     }
+
     setLoading(true);
-    
     api("item", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){

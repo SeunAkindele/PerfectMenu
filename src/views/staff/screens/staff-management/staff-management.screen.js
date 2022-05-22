@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import {  } from "./staff-management.screen.styles";
 import { StaffContext } from "../../context/staff.context";
 import { StaffInput, StaffButton, Select, StaffContainer } from "./staff-management.screen.styles";
 import { Spacer } from "../../../../components/spacer/spacer.component";
@@ -10,7 +9,13 @@ import {TextInput} from "react-native-paper";
 import { IsLoading } from "../../../../components/loading/loading.component";
 
 export const StaffManagementScreen = ({ navigation }) => {
-  const { staff } = useContext(StaffContext);
+  const { loading, createStaff, getLocations, locations } = useContext(StaffContext);
+
+  const [type, setType] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
 
   const position = [
     {
@@ -22,55 +27,54 @@ export const StaffManagementScreen = ({ navigation }) => {
       value: "2",
     }
   ];
+
+  useEffect(() => getLocations(), []);
   
   return (
     <SafeArea>
-      {/* <IsLoading /> */}
+      <IsLoading loading={loading} />
       <StaffContainer>
       <Spacer size="large">
         <StaffInput
           label="Staff name *"
-          // value={}
-          // textContentType="emailAddress"
-          // keyboardType="email-address"
           autoCapitalize="none"
-          onChangeText={(u) => console.log(u)}
+          onChangeText={(u) => setName(u)}
         />
       </Spacer>
 
       <Spacer size="large">
         <StaffInput
           label="E-mail *"
-          // value={}
-          // textContentType="emailAddress"
-          // keyboardType="email-address"
+          textContentType="emailAddress"
           autoCapitalize="none"
-          onChangeText={(u) => console.log(u)}
+          onChangeText={(u) => setEmail(u)}
         />
       </Spacer>
 
       <Spacer size="large">
         <StaffInput
           label="Phone number *"
-          // value={}
-          // textContentType="number"
-          // keyboardType="tel"
+          keyboardType="tel"
           autoCapitalize="none"
-          onChangeText={(u) => console.log(u)}
+          onChangeText={(u) => setPhone(u)}
         />
       </Spacer>
 
       <Spacer size="large">
+      <Dropdown
+          data={locations} onValueChange={ item => setLocation(item)} placeholder='Select Location *'
+        />
+        </Spacer>
+        <Spacer size="large">
         <Dropdown
-          data={position} onValueChange={ item => console.log(item)} placeholder='Select Position *'
+          data={position} onValueChange={ item => setType(item)} placeholder='Select Position *'
         />
       </Spacer>
      
       <Spacer size="large">
         <StaffButton
-          // icon=""
           mode="contained"
-          onPress={() => alert("Hello!")}
+          onPress={() => createStaff(name, email, phone, type, location, navigation)}
         >
           Create Staff
         </StaffButton>

@@ -13,8 +13,8 @@ export const StaffOrderScreen = ({navigation}) => {
   const [time, setTime] = useState(0);
   const [pending, setPending] = useState([]);
 
-  const { staffOrder } = useContext(StaffContext);
-
+  // const {  } = useContext(StaffContext);
+const staffOrder = [1];
   useEffect(() => load(), []);
 
   const load = () => {
