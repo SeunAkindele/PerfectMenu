@@ -17,9 +17,9 @@ export const RegisterContextProvider = ({ children }) => {
 
     api("register", {request: inputs}, "", response => {
       if(response['success'] === true) {
-        if(response['data']){
-          let data = response['data'][0];
-          arr.push({label: data.name, value: data.id});
+        if(response['data']) {
+          let data = response['data'];
+          data.map(item => arr.push({label: item.name, value: item.id}));
           setLocations(arr);
           setLoading(false);
         }

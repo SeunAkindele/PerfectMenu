@@ -62,7 +62,7 @@ export const MenuContextProvider = ({ children }) => {
       if(response['success'] === true) {
         getRatings(id);
         setLoading(false);
-        alert(`You rated this menu ${rate}`)
+        alert("Thanks for rating this menu");
       } else {
         alert(response['data'])
         setLoading(false);

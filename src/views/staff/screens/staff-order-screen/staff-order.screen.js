@@ -13,9 +13,9 @@ export const StaffOrderScreen = ({navigation}) => {
   const [time, setTime] = useState(0);
   const [pending, setPending] = useState([]);
 
-  // const {  } = useContext(StaffContext);
-const staffOrder = [1];
-  useEffect(() => load(), []);
+  const { getOrder } = useContext(StaffContext);
+  const staffOrder = [1];
+  useEffect(() => getOrder(), []);
 
   const load = () => {
     if(staffOrder.includes(2)){

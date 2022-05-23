@@ -1,6 +1,6 @@
 import React, {useState, createContext, useContext} from "react";
 import { api } from "../../../api/api";
-import { checkEmptyInput } from "../../../components/utility/functions";
+import { checkEmptyInput, strlen } from "../../../components/utility/functions";
 import { LoginContext } from "../../account/context/login.context";
 
 export const StaffContext = createContext();
@@ -26,6 +26,31 @@ export const StaffContextProvider = ({ children }) => {
           setLocations(arr);
           setLoading(false);
         }
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const getOrder = () => {
+    const inputs = {
+      page: 'getOrder'
+    }
+    
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setOrder(response['data']['data']);
+            setPending(response['data']['pending']);
+          } else {
+            setOrder(null);
+          }
+        } else {
+          setOrder(null);
+        }
+        setLoading(false);
       } else {
         alert(response['data'])
         setLoading(false);
@@ -65,6 +90,7 @@ export const StaffContextProvider = ({ children }) => {
     loading,
     createStaff,
     locations,
-    getLocations
+    getLocations,
+    getOrder
   }}>{children}</StaffContext.Provider>;
 }
