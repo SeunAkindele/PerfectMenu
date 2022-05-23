@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
 import {View} from "react-native";
 
 export const StaffOrderSummaryContainer = styled(View)`
@@ -9,6 +10,16 @@ export const StaffOrderSummaryContainer = styled(View)`
 export const StaffOrderSummaryWrapper = styled(View)`
   background-color: ${(props) => props.theme.colors.ui.tertiary};
   padding: ${(props) => props.theme.space[3]};
+`;
+
+export const Dispatch = styled(TouchableOpacity)`
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  background-color: ${(props) => props.theme.colors.ui.success};
+  padding: ${(props) => props.theme.space[2]};
+  padding-bottom: ${(props) => props.theme.space[3]};
 `;
 
 export const StaffOrderSummaryList = styled(View)`

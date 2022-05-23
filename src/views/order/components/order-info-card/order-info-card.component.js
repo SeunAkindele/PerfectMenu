@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import { Alert } from "react-native";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
-import { format, readableDate, ucFirst } from "../../../../components/utility/functions";
+import { format, readableDate } from "../../../../components/utility/functions";
 import { OrderContext } from "../../context/order.context";
 import {OrderCard, Info, LeftInfo, RightInfo, Eye, Trash, Check} from "./order-info-card.styles";
 import { FontAwesome5 } from '@expo/vector-icons';

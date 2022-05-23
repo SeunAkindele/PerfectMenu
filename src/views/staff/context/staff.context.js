@@ -8,8 +8,13 @@ export const StaffContext = createContext();
 export const StaffContextProvider = ({ children }) => {
   const {token} = useContext(LoginContext);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [orderBackUp, setOrderBackUp] = useState([]);
+  const [pastOrder, setPastOrder] = useState([]);
+  const [pastOrderBackUp, setPastOrderBackUp] = useState([]);
+  const [pending, setPending] = useState([]);
 
   const getLocations = () => {
     const inputs = {
@@ -37,16 +42,17 @@ export const StaffContextProvider = ({ children }) => {
     const inputs = {
       page: 'getOrder'
     }
-    
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
           if(strlen(response['data']['data']) > 0){
             setOrder(response['data']['data']);
+            setOrderBackUp(response['data']['data']);
             setPending(response['data']['pending']);
           } else {
             setOrder(null);
           }
+          setLoading(true);
         } else {
           setOrder(null);
         }
@@ -86,7 +92,52 @@ export const StaffContextProvider = ({ children }) => {
     });
   }
 
+  const cancleOrder = (orderToken, customerId) => {
+    const inputs = {
+      page: 'cancleOrder',
+      token: orderToken,
+      customerId
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getOrder();
+        // getPastOrder();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const dispatchOrder = (orderToken, customerId) => {
+    
+    const inputs = {
+      page: 'dispatchOrder',
+      token: orderToken,
+      customerId
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getOrder();
+        // getPastOrder();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   return <StaffContext.Provider value={{
+    order,
+    cancleOrder,
+    dispatchOrder,
+    orderBackUp,
+    setOrder,
+    pending,
     loading,
     createStaff,
     locations,

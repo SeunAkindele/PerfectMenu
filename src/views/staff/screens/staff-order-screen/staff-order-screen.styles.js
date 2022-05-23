@@ -23,6 +23,7 @@ export const StaffOrderIcon = styled(Avatar.Icon).attrs({
   background-color: ${(props) => props.bg || props.theme.colors.brand.primary};
 `;
 
+
 export const StaffOrderList = styled(FlatList).attrs({
   contentContainerStyle: {
     padding: 16,

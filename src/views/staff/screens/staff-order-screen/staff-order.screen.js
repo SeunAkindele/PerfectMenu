@@ -1,97 +1,133 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import { StaffOrderContainer, StaffOrderIcon, StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh, SearchContainer } from './staff-order-screen.styles';
+import { StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh, SearchContainer, StaffOrderIcon } from './staff-order-screen.styles';
 import { Searchbar } from "react-native-paper";
 import {Text} from "../../../../components/typography/text.component";
 import { StaffOrderInfoCard } from "../../components/staff-order-info-card/staff-order-info-card.component";
 import { StaffContext } from "../../context/staff.context";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { FadeInView } from "../../../../components/animations/fade.animation";
+import { IsLoading } from '../../../../components/loading/loading.component';
+import { ErrorContainer } from '../../../../components/utility/error.component.styles';
+import { strlen } from '../../../../components/utility/functions';
 
 export const StaffOrderScreen = ({navigation}) => {
   const [time, setTime] = useState(0);
-  const [pending, setPending] = useState([]);
 
-  const { getOrder } = useContext(StaffContext);
-  const staffOrder = [1];
-  useEffect(() => getOrder(), []);
+  const { order, getOrder, loading, pending, orderBackUp, setOrder } = useContext(StaffContext);
+  const [loadOrder, setLoadOrder] = useState(false);
+
+
+  useEffect(() => {
+    setTimeout(() => { 
+      getOrder();
+      load();
+    }, 2000);
+  }, []);
 
   const load = () => {
-    if(staffOrder.includes(2)){
+    if(pending.includes("2") || pending.includes("1")){
       setTime(1);
-      // alert("Pending");
-      setPending(staffOrder);
-      // return false;
-    } else {
-      // alert("Dispatched");
-      setPending(staffOrder);
-      // return false;
     }
   }
 
   const reload = () => {
-    if(staffOrder.includes(2)){
-     
-      alert("Still Pending");
-      setPending(staffOrder);
-      // return false;
-    } else {
-      // alert("Dispatched");
-      setPending(staffOrder);
-      // return false;
-    }
+    setLoadOrder(true);
+    setTimeout(() => { 
+      getOrder();
+      setLoadOrder(false);
+    }, 2000);
   }
 
   const countDown = () => {
     setTime(time - 0.01);
   }
 
-  if(pending.includes(2)){
+  if(pending.includes("2") || pending.includes("1")){
     if(time > 0){
       setTimeout(countDown, 1000);
     } else {
+      reload();
       load();
     }
-  } 
+  }  
+
+  const search = (text) => {
+    setOrder(orderBackUp.filter(item => item.token.toLocaleLowerCase().includes(text.toLocaleLowerCase())));
+  }
 
   return (
     <SafeArea>
-      {staffOrder === "" 
-      ? <StaffOrderContainer>
-          <StaffOrderIcon bg="#ccc" icon="close" />
-          <Text>No orders yet!</Text>
-        </StaffOrderContainer>
-      : <>
-           <SearchContainer>
-            <Searchbar placeholder="Search" />
+      <IsLoading loading={loading} />
+       <SearchContainer>
+            <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
           </SearchContainer>
+          {loading
+        
+        &&
+        <ErrorContainer>
+          <Text variant="error">Fetching Data...</Text>
+        </ErrorContainer>}
+      {order !== null
+        &&
+        strlen(order) > 0
+        ?
+       <>
+          
           <StaffOrderList
-            data={staffOrder}
+            data={order}
+            onRefresh={reload}
+            refreshing={loading}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Spacer position="bottom" size="large">
                 <TouchableOpacity onPress={() => navigation.navigate("StaffOrderDetails", {
-                  staffOrder: staffOrder,
-                })}>
+                  item: item, navigation: navigation
+                })} key={item.id}>
                   <FadeInView>
-                    <StaffOrderInfoCard staffOrder={item} />
+                    <StaffOrderInfoCard staffOrder={item} loadOrder={loadOrder} />
                   </FadeInView>
                 </TouchableOpacity>
               </Spacer>
             )}
-            keyExtractor={(item) => item.name}
           />
-          {pending.includes(2) &&
+          {(pending.includes("2") || pending.includes("1")) &&
           <>
             <Refresh name="ios-refresh-circle" onPress={() => reload()} />
             <Progress progress={time} />
           </>}
+          </>
+           :
+           order == null
+           &&
+           <StaffOrderList
+           data={[{id: 1}]}
+           onRefresh={reload}
+           refreshing={loading}
+           keyExtractor={(item) => item.id}
+           renderItem={({ item }) => (
+             <ErrorContainer>
+               <StaffOrderIcon bg="#ccc" icon="close" />
+               <Spacer position="bottom" size="large">
+                 <Text>No orders today yet!</Text>
+                 <Text>Drag down to Refresh</Text>
+               </Spacer>
+             </ErrorContainer>
+           )}
+         />
+         
+       }
+       {
+         order == ""
+         &&
+         <View style={{flex: 1}}></View>
+       }
           <StaffOrderHistory onPress={() => navigation.navigate("StaffOrderHistory")}>
             <Text color="white" variant="label">Past Orders</Text>
             <Arrow name="up" />
           </StaffOrderHistory>
-        </>
-      }
+        
     </SafeArea>
   )
 };
