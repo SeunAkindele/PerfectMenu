@@ -20,10 +20,9 @@ export const StaffOrderScreen = ({navigation}) => {
 
 
   useEffect(() => {
-    setTimeout(() => { 
+   
       getOrder();
       load();
-    }, 2000);
   }, []);
 
   const load = () => {

@@ -1,6 +1,5 @@
-import styled from "styled-components/native";
-import { TouchableOpacity } from "react-native";
-import {View} from "react-native";
+import styled from "styled-components/native"; 
+import {View, TouchableOpacity} from "react-native";
 
 export const StaffOrderSummaryContainer = styled(View)`
   margin: ${(props) => props.theme.space[4]};

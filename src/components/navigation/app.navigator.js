@@ -38,6 +38,7 @@ export const AppNavigator = ({authorization}) => {
       return (
         <>
         <Tab.Screen name="Dashboard" component={CustomerNavigator} />
+        <Tab.Screen name="Order" component={StaffNavigator} />
          <Tab.Screen name="Customer" component={CustomerNavigator} />
           <Tab.Screen name="Staff" component={AdminNavigator} />
           <Tab.Screen name="Item" component={ItemNavigator} />

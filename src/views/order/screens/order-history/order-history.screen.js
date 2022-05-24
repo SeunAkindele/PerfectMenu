@@ -1,4 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { Searchbar } from "react-native-paper";
 import { SafeArea } from "../../../../components/utility/safe-area.component";
@@ -17,10 +18,15 @@ export const OrderHistoryScreen = ({navigation}) => {
   const { pastOrder, getPastOrder, pastOrderBackUp, setPastOrder, loading } = useContext(OrderContext);
   const [loadOrder, setLoadOrder] = useState(false);
  
-  useEffect(() => {
-    getPastOrder();
-    setLoadOrder(false);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoadOrder(true);
+      setTimeout(() => { 
+        getPastOrder();
+        setLoadOrder(false);
+      }, 2000);
+    }, [])
+  );
 
   const reload = () => {
     setLoadOrder(true);
@@ -38,7 +44,7 @@ export const OrderHistoryScreen = ({navigation}) => {
     <SafeArea>
       <IsLoading loading={loading} />
       <SearchContainer>
-        <Searchbar placeholder="Search Token" onChangeText={(text) => search(text)} />
+        <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
       </SearchContainer>
 
           {loading 

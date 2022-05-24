@@ -1,46 +1,94 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Searchbar } from "react-native-paper";
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 
-import { StaffOrderContainer, StaffOrderIcon, StaffOrderList, SearchContainer } from './staff-order-history.screen.styles';
+import { StaffOrderIcon, StaffOrderList, SearchContainer } from './staff-order-history.screen.styles';
 import {Text} from "../../../../components/typography/text.component";
 import { StaffOrderInfoCard } from "../../components/staff-order-info-card/staff-order-info-card.component";
 import { StaffContext } from "../../context/staff.context";
 import { Spacer } from "../../../../components/spacer/spacer.component";
+import { FadeInView } from '../../../../components/animations/fade.animation';
+import { IsLoading } from '../../../../components/loading/loading.component';
+import { ErrorContainer } from '../../../../components/utility/error.component.styles';
+import { strlen } from '../../../../components/utility/functions';
 
 export const StaffOrderHistoryScreen = ({navigation}) => {
 
-  const { staffOrder } = useContext(StaffContext);
+  const { pastOrder, getPastOrder, pastOrderBackUp, setPastOrder, loading } = useContext(StaffContext);
+  const [loadOrder, setLoadOrder] = useState(false);
  
-  // useEffect(() => load(), []);
+  useEffect(() => {
+    getPastOrder();
+    setLoadOrder(false);
+  }, []);
 
+  const reload = () => {
+    setLoadOrder(true);
+    setTimeout(() => { 
+      getPastOrder();
+      setLoadOrder(false);
+    }, 2000);
+  }
+
+  const search = (text) => {
+    setPastOrder(pastOrderBackUp.filter(item => item.token.toLocaleLowerCase().includes(text.toLocaleLowerCase())));
+  }
   return (
     <SafeArea>
-      {staffOrder === "" 
-      ? <StaffOrderContainer>
-          <StaffOrderIcon bg="#ccc" icon="close" />
-          <Text>No orders yet!</Text>
-        </StaffOrderContainer>
-      : <>
-          <SearchContainer>
-            <Searchbar placeholder="Search" />
-          </SearchContainer>
+      <IsLoading loading={loading} />
+      <SearchContainer>
+        <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
+      </SearchContainer>
 
+          {loading 
+        &&
+        <ErrorContainer>
+          <Text variant="error">Fetching Data...</Text>
+        </ErrorContainer>}
+      {pastOrder !== null
+        &&
+        strlen(pastOrder) > 0
+        ?
+       <>
           <StaffOrderList
-            data={staffOrder}
+            data={pastOrder}
+            onRefresh={reload}
+            refreshing={loading}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Spacer position="bottom" size="large">
-                <TouchableOpacity onPress={() => navigation.navigate("StaffOrderDetails", {
-                  staffOrder: staffOrder,
-                })}>
-                  <StaffOrderInfoCard staffOrder={item} />
-                </TouchableOpacity>
-              </Spacer>
+              <TouchableOpacity onPress={() => navigation.navigate("StaffOrderDetails", {
+                  item: item,
+              })} key={item.id}>
+                <Spacer position="bottom" size="large">
+                <FadeInView>
+                    <StaffOrderInfoCard staffOrder={item} loadOrder={loadOrder} />
+                  </FadeInView>
+                </Spacer>
+              </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.name}
           />
+         
+         
         </>
+        :
+        pastOrder == null
+        &&
+        <StaffOrderList
+          data={[{id: 1}]}
+          onRefresh={reload}
+          refreshing={loading}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ErrorContainer>
+              <StaffOrderIcon bg="#ccc" icon="close" />
+              <Spacer position="bottom" size="large">
+                <Text>No past orders yet!</Text>
+              </Spacer>
+            </ErrorContainer>
+          )}
+        />
+        
       }
     </SafeArea>
   )

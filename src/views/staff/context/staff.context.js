@@ -16,6 +16,32 @@ export const StaffContextProvider = ({ children }) => {
   const [pastOrderBackUp, setPastOrderBackUp] = useState([]);
   const [pending, setPending] = useState([]);
 
+  const getPastOrder = () => {
+    const inputs = {
+      page: 'getPastOrder'
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setPastOrder(response['data']['data']);
+            setPastOrderBackUp(response['data']['data']);
+          } else {
+            setPastOrder(null);
+          }
+        } else {
+          setPastOrder(null);
+        }
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+
   const getLocations = () => {
     const inputs = {
       page: 'getLocations'
@@ -43,6 +69,7 @@ export const StaffContextProvider = ({ children }) => {
       page: 'getOrder'
     }
     api("staff", {request: inputs}, token, response => {
+    
       if(response['success'] === true) {
         if(response['data']){
           if(strlen(response['data']['data']) > 0){
@@ -102,7 +129,7 @@ export const StaffContextProvider = ({ children }) => {
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getOrder();
-        // getPastOrder();
+        getPastOrder();
         setLoading(false);
       } else {
         alert(response['data'])
@@ -122,7 +149,7 @@ export const StaffContextProvider = ({ children }) => {
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getOrder();
-        // getPastOrder();
+        getPastOrder();
         setLoading(false);
       } else {
         alert(response['data'])
@@ -142,6 +169,10 @@ export const StaffContextProvider = ({ children }) => {
     createStaff,
     locations,
     getLocations,
-    getOrder
+    getOrder,
+    pastOrderBackUp,
+    pastOrder,
+    setPastOrder,
+    getPastOrder
   }}>{children}</StaffContext.Provider>;
 }
