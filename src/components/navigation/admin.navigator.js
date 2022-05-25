@@ -9,6 +9,9 @@ import { StaffScreen } from "../../views/staff/screens/staff-screen/staff.screen
 import { StaffManagementScreen } from "../../views/staff/screens/staff-management/staff-management.screen";
 import { CustomerManagementScreen } from "../../views/customer/screens/customer-management/customer-management.screen";
 import { ItemScreen } from "../../views/item/screens/item-screen/item.screen";
+import { AdminStaffOrderScreen } from "../../views/staff/screens/admin-staff-order-screen/admin-staff-order-screen";
+import { AdminStaffOrderDetailsScreen } from "../../views/staff/screens/admin-staff-order-details/admin-staff-order-details.screen";
+import { AdminStaffOrderHistoryScreen } from "../../views/staff/screens/admin-staff-order-history/admin-staff-order-history.screen";
 
 const AdminStack = createStackNavigator();
 
@@ -17,6 +20,7 @@ export const AdminNavigator = () => {
     <AdminStack.Navigator headerMode="none" screenOptions={{
       ...TransitionPresets.ModalPresentationIOS
     }}>
+
       <AdminStack.Screen 
         name="StaffScreen"
         component={StaffScreen}
@@ -50,6 +54,21 @@ export const AdminNavigator = () => {
       <AdminStack.Screen 
         name="StaffOrderHistory"
         component={StaffOrderHistoryScreen}
+      />
+
+      <AdminStack.Screen 
+        name="AdminStaffOrderScreen"
+        component={AdminStaffOrderScreen}
+      />
+
+      <AdminStack.Screen 
+        name="AdminStaffOrderDetailsScreen"
+        component={AdminStaffOrderDetailsScreen}
+      />
+
+      <AdminStack.Screen 
+        name="AdminStaffOrderHistoryScreen"
+        component={AdminStaffOrderHistoryScreen}
       />
     </AdminStack.Navigator>
   );

@@ -3,14 +3,14 @@ import { ScrollView, Alert } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { Underline } from '../../../../components/underline/underline';
 import { Spacer } from '../../../../components/spacer/spacer.component';
-import { StaffOrderSummaryContainer, StaffOrderSummaryList, StaffOrderSummaryWrapper, StaffOrderSummaryTotal,Dispatch } from './staff-order-details.screen.styles';
+import { StaffOrderSummaryContainer, StaffOrderSummaryList, StaffOrderSummaryWrapper, StaffOrderSummaryTotal,Dispatch } from './admin-staff-order-details.screen.styles';
 import { Text } from '../../../../components/typography/text.component';
 import { format, readableDate, ucFirst, ucWord } from '../../../../components/utility/functions';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Trash } from '../../components/staff-order-info-card/staff-order-info-card.styles';
 import { StaffContext } from '../../context/staff.context';
 
-export const StaffOrderDetailsScreen = ({route, navigation}) => {
+export const AdminStaffOrderDetailsScreen = ({route, navigation}) => {
  
   const {item} = route.params;
   const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_id, status, staff_name} = item;
@@ -25,24 +25,7 @@ export const StaffOrderDetailsScreen = ({route, navigation}) => {
           <StaffOrderSummaryWrapper>
             <StaffOrderSummaryList>
               <Text variant="tag">ORDER: #{token}</Text>
-              {status == 2 && <Trash onPress={() => {
-            Alert.alert(
-              "Cancle Order",
-              "Are you sure?",
-              [
-                {
-                  text: "Cancel",
-                  style: "cancel"
-                },
-                { text: "OK", onPress: () => {
-                  cancleOrder(token, customer_id);
-                  navigation.goBack();
-                }
-                }
-              ],
-              { cancelable: false }
-            );
-          }} name="closecircle" />}
+             
               </StaffOrderSummaryList>
             <Spacer position="bottom" size="medium" />
             <StaffOrderSummaryList>
@@ -75,25 +58,7 @@ export const StaffOrderDetailsScreen = ({route, navigation}) => {
               <Text variant="tag">₦{format(total, 2)}</Text>
             </StaffOrderSummaryTotal>
             <Spacer position="top" size="large" />
-            {status == 2 && <Dispatch onPress={() =>
-              Alert.alert(
-                "Dispatch Order",
-                "Are you sure?",
-                [
-                  {
-                    text: "Cancel",
-                    style: "cancel"
-                  },
-                  { text: "OK", onPress: () => {
-                    dispatchOrder(token, customer_id);
-                    navigation.goBack();
-                  }}
-                ],
-                { cancelable: false }
-              )
-            }>
-              <Text variant="tag" color="white">Dispatch Order</Text>
-            </Dispatch>}
+            
             <StaffOrderSummaryList>
               <Text variant="tag">CUSTOMER</Text>
             </StaffOrderSummaryList>

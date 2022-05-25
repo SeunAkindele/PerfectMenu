@@ -98,7 +98,9 @@ export const CustomerOrderScreen = ({navigation, route}) => {
          &&
          <View style={{flex: 1}}></View>
        }
-          <CustomerOrderHistory onPress={() => navigation.navigate("CustomerOrderHistory")}>
+          <CustomerOrderHistory onPress={() => navigation.navigate("CustomerOrderHistory", {
+                  customer: customer, navigation: navigation
+                })}>
             <Text color="white" variant="label">Customer Past Orders</Text>
             <Arrow name="up" />
           </CustomerOrderHistory>

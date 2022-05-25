@@ -6,14 +6,14 @@ import { Spacer } from '../../../../components/spacer/spacer.component';
 import { CustomerOrderSummaryContainer, CustomerOrderSummaryList, CustomerOrderSummaryWrapper, CustomerOrderSummaryTotal, Dispatch } from './customer-order-details.screen.styles';
 import { Text } from '../../../../components/typography/text.component';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { format, readableDate, ucFirst } from '../../../../components/utility/functions';
+import { format, readableDate, ucFirst, ucWord } from '../../../../components/utility/functions';
 import { CustomerContext } from "../../context/customer.context";
 import { Trash } from '../../components/customer-order-info-card/customer-order-info-card.styles';
 
 export const CustomerOrderDetailsScreen = ({navigation, route}) => {
 
   const {item} = route.params;
-  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_id, status} = item;
+  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_id, status, staff_name} = item;
   const total = parseInt(amount) + parseInt(vat_value) + parseInt(delivery_fee);
 
   const {cancleOrder, dispatchOrder} = useContext(CustomerContext);
@@ -98,9 +98,17 @@ export const CustomerOrderDetailsScreen = ({navigation, route}) => {
               <Text variant="tag">CUSTOMER</Text>
             </CustomerOrderSummaryList>
             <CustomerOrderSummaryList>
-              <Text variant="tag">{ucFirst(customer_name)}</Text>
+              <Text variant="tag">{ucWord(customer_name)}</Text>
               <Text variant="tag">{customer_phone}</Text>
             </CustomerOrderSummaryList>
+            {
+              staff_name
+              &&
+              <CustomerOrderSummaryList>
+                <Text variant="tag">SOLD BY</Text>
+                <Text variant="tag">{ucWord(staff_name)}</Text>
+              </CustomerOrderSummaryList>
+            }
           </CustomerOrderSummaryWrapper>
         </ScrollView>
       </CustomerOrderSummaryContainer>

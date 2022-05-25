@@ -11,6 +11,7 @@ export const CustomerContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [customerOrder, setCustomerOrder] = useState([]);
   const [customerOrderBackUp, setCustomerOrderBackUp] = useState([]);
+  const [customerPastOrderBackUp, setCustomerPastOrderBackUp] = useState([]);
   const [customerPastOrder, setCustomerPastOrder] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [customersBackUp, setCustomersBackUp] = useState([]);
@@ -19,7 +20,7 @@ export const CustomerContextProvider = ({ children }) => {
     const inputs = {
       page: 'getCustomers'
     }
-    
+    setLoading(true);
     api("customer", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
@@ -41,7 +42,7 @@ export const CustomerContextProvider = ({ children }) => {
       page: 'getCustomerOrder',
       customerId
     }
-    
+    setLoading(true);
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
@@ -72,7 +73,7 @@ export const CustomerContextProvider = ({ children }) => {
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getCustomerOrder(customerId);
-        // getCustomerPastOrder();
+        getCustomerPastOrder(customerId);
         setLoading(false);
       } else {
         alert(response['data'])
@@ -92,7 +93,45 @@ export const CustomerContextProvider = ({ children }) => {
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         getCustomerOrder(customerId);
-        // getCustomerPastOrder();
+        getCustomerPastOrder(customerId);
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const disableCustomer = (customerId) => {
+    const inputs = {
+      page: 'disableCustomer',
+      customerId
+    }
+    setLoading(true);
+    api("customer", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+       
+          getCustomers();
+       
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const enableCustomer = (customerId) => {
+    const inputs = {
+      page: 'enableCustomer',
+      customerId
+    }
+    setLoading(true);
+    api("customer", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+       
+          getCustomers();
+        
         setLoading(false);
       } else {
         alert(response['data'])
@@ -106,7 +145,7 @@ export const CustomerContextProvider = ({ children }) => {
       page: 'getCustomerPastOrder',
       customerId
     }
-    
+    setLoading(true);
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
@@ -128,6 +167,7 @@ export const CustomerContextProvider = ({ children }) => {
   }
   return <CustomerContext.Provider value={{
     customerPastOrder,
+    setCustomerPastOrder,
     customerOrder,
     getCustomerPastOrder,
     getCustomerOrder,
@@ -140,6 +180,9 @@ export const CustomerContextProvider = ({ children }) => {
     loading,
     authorization,
     cancleOrder,
-    dispatchOrder
+    dispatchOrder,
+    customerPastOrderBackUp,
+    disableCustomer,
+    enableCustomer
   }}>{children}</CustomerContext.Provider>;
 }

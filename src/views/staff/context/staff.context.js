@@ -15,12 +15,36 @@ export const StaffContextProvider = ({ children }) => {
   const [pastOrder, setPastOrder] = useState([]);
   const [pastOrderBackUp, setPastOrderBackUp] = useState([]);
   const [pending, setPending] = useState([]);
+  const [staffs, setStaffs] = useState([]);
+  const [staffsBackUp, setStaffsBackUp] = useState([]);
+
+
+  const getStaffs = () => {
+    const inputs = {
+      page: 'getStaffs'
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          setStaffs(response['data']);
+          setStaffsBackUp(response['data']);
+        } else {
+          setStaffs(null);
+        }
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
 
   const getPastOrder = () => {
     const inputs = {
       page: 'getPastOrder'
     }
-    setLoading(true);
+    
     api("staff", {request: inputs}, token, response => {
       if(response['success'] === true) {
         if(response['data']){
@@ -64,12 +88,64 @@ export const StaffContextProvider = ({ children }) => {
     });
   }
 
+  const getStaffPastOrder = (staffId) => {
+    const inputs = {
+      page: 'getStaffPastOrder',
+      staffId
+    }
+    
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setPastOrder(response['data']['data']);
+            setPastOrderBackUp(response['data']['data']);
+          } else {
+            setPastOrder(null);
+          }
+        } else {
+          setPastOrder(null);
+        }
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const getStaffOrder = (staffId) => {
+    const inputs = {
+      page: 'getStaffOrder',
+      staffId
+
+    }
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        if(response['data']){
+          if(strlen(response['data']['data']) > 0){
+            setOrder(response['data']['data']);
+            setOrderBackUp(response['data']['data']);
+          } else {
+            setOrder(null);
+          }
+          setLoading(true);
+        } else {
+          setOrder(null);
+        }
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   const getOrder = () => {
     const inputs = {
       page: 'getOrder'
     }
     api("staff", {request: inputs}, token, response => {
-    
       if(response['success'] === true) {
         if(response['data']){
           if(strlen(response['data']['data']) > 0){
@@ -158,6 +234,40 @@ export const StaffContextProvider = ({ children }) => {
     });
   }
 
+  const disableStaff = (staffId) => {
+    const inputs = {
+      page: 'disableStaff',
+      staffId
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getStaffs();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
+  const enableStaff = (staffId) => {
+    const inputs = {
+      page: 'enableStaff',
+      staffId
+    }
+    setLoading(true);
+    api("staff", {request: inputs}, token, response => {
+      if(response['success'] === true) {
+        getStaffs();
+        setLoading(false);
+      } else {
+        alert(response['data'])
+        setLoading(false);
+      }
+    });
+  }
+
   return <StaffContext.Provider value={{
     order,
     cancleOrder,
@@ -173,6 +283,13 @@ export const StaffContextProvider = ({ children }) => {
     pastOrderBackUp,
     pastOrder,
     setPastOrder,
-    getPastOrder
+    getPastOrder,
+    getStaffs,
+    staffs,
+    staffsBackUp,
+    disableStaff,
+    enableStaff,
+    getStaffOrder,
+    getStaffPastOrder
   }}>{children}</StaffContext.Provider>;
 }

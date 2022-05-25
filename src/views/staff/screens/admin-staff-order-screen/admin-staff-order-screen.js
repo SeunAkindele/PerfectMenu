@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import { StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh, SearchContainer, StaffOrderIcon } from './staff-order-screen.styles';
+import { StaffOrderList, StaffOrderHistory, Arrow, SearchContainer, StaffOrderIcon } from './admin-staff-order-screen.styles';
 import { Searchbar } from "react-native-paper";
 import {Text} from "../../../../components/typography/text.component";
 import { StaffOrderInfoCard } from "../../components/staff-order-info-card/staff-order-info-card.component";
@@ -12,47 +12,29 @@ import { IsLoading } from '../../../../components/loading/loading.component';
 import { ErrorContainer } from '../../../../components/utility/error.component.styles';
 import { strlen } from '../../../../components/utility/functions';
 
-export const StaffOrderScreen = ({navigation}) => {
-  const [time, setTime] = useState(0);
+export const AdminStaffOrderScreen = ({navigation, route}) => {
 
-  const { order, getOrder, loading, pending, orderBackUp, setOrder } = useContext(StaffContext);
+  const { order, getStaffOrder, loading, orderBackUp, setOrder } = useContext(StaffContext);
   const [loadOrder, setLoadOrder] = useState(false);
+
+  const {staff} = route.params;
 
 
   useEffect(() => {
     setTimeout(() => { 
-      getOrder();
-      load();
+      getStaffOrder(staff.id);
     }, 2000);
       
   }, []);
 
-  const load = () => {
-    if(pending.includes("2") || pending.includes("1")){
-      setTime(1);
-    }
-  }
-
   const reload = () => {
     setLoadOrder(true);
     setTimeout(() => { 
-      getOrder();
+      getStaffOrder(staff.id);
       setLoadOrder(false);
     }, 2000);
   }
 
-  const countDown = () => {
-    setTime(time - 0.01);
-  }
-
-  if(pending.includes("2") || pending.includes("1")){
-    if(time > 0){
-      setTimeout(countDown, 1000);
-    } else {
-      reload();
-      load();
-    }
-  }  
 
   const search = (text) => {
     setOrder(orderBackUp.filter(item => item.token.toLocaleLowerCase().includes(text.toLocaleLowerCase())));
@@ -61,20 +43,20 @@ export const StaffOrderScreen = ({navigation}) => {
   return (
     <SafeArea>
       <IsLoading loading={loading} />
-       <SearchContainer>
-            <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
-          </SearchContainer>
-          {loading
+        <SearchContainer>
+          <Searchbar placeholder="Search" onChangeText={(text) => search(text)} />
+        </SearchContainer>
+        {loading
         
         &&
         <ErrorContainer>
           <Text variant="error">Fetching Data...</Text>
         </ErrorContainer>}
-      {order !== null
+        {order !== null
         &&
         strlen(order) > 0
         ?
-       <>
+        <>
           
           <StaffOrderList
             data={order}
@@ -83,7 +65,7 @@ export const StaffOrderScreen = ({navigation}) => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Spacer position="bottom" size="large">
-                <TouchableOpacity onPress={() => navigation.navigate("StaffOrderDetails", {
+                <TouchableOpacity onPress={() => navigation.navigate("AdminStaffOrderDetailsScreen", {
                   item: item, navigation: navigation
                 })} key={item.id}>
                   <FadeInView>
@@ -93,11 +75,7 @@ export const StaffOrderScreen = ({navigation}) => {
               </Spacer>
             )}
           />
-          {(pending.includes("2") || pending.includes("1")) &&
-          <>
-            <Refresh name="ios-refresh-circle" onPress={() => reload()} />
-            <Progress progress={time} />
-          </>}
+         
           </>
            :
            order == null
@@ -124,8 +102,10 @@ export const StaffOrderScreen = ({navigation}) => {
          &&
          <View style={{flex: 1}}></View>
        }
-          <StaffOrderHistory onPress={() => navigation.navigate("StaffOrderHistory")}>
-            <Text color="white" variant="label">Past Orders</Text>
+          <StaffOrderHistory onPress={() => navigation.navigate("AdminStaffOrderHistoryScreen", {
+                  staff: staff, navigation: navigation
+                })}>
+            <Text color="white" variant="label">Staff Past Orders</Text>
             <Arrow name="up" />
           </StaffOrderHistory>
         

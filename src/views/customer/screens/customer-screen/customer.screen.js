@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { Searchbar } from "react-native-paper";
 import { CustomerIcon, CustomerList, CustomerManagement, Arrow, SearchContainer} from './customer-screen.styles';
@@ -90,12 +90,18 @@ export const CustomerScreen = ({navigation}) => {
           </>
           }
           {
-            authorization == 2
+            (customers == "" && authorization == "2")
+            &&
+            <View style={{flex: 1}}></View>
+          }
+          {
+            authorization == "2"
             &&
             <CustomerManagement onPress={() => navigation.navigate("CustomerManagement")}>
               <Text color="white" variant="label">Manage Customers</Text>
               <Arrow name="up" />
             </CustomerManagement>
+            
           }
         
       
