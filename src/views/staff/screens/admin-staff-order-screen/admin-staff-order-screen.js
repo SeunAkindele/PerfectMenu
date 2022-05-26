@@ -102,12 +102,12 @@ export const AdminStaffOrderScreen = ({navigation, route}) => {
          &&
          <View style={{flex: 1}}></View>
        }
-          <StaffOrderHistory onPress={() => navigation.navigate("AdminStaffOrderHistoryScreen", {
-                  staff: staff, navigation: navigation
-                })}>
-            <Text color="white" variant="label">Staff Past Orders</Text>
-            <Arrow name="up" />
-          </StaffOrderHistory>
+        <StaffOrderHistory onPress={() => navigation.navigate("AdminStaffOrderHistoryScreen", {
+                staff: staff, navigation: navigation
+              })}>
+          <Text color="white" variant="label">Staff Past Orders</Text>
+          <Arrow name="up" />
+        </StaffOrderHistory>
         
     </SafeArea>
   )

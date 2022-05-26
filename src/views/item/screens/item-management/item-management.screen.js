@@ -2,8 +2,6 @@ import React, { useContext, useState } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import {  } from "./item-management.screen.styles";
-import { ItemContext } from "../../context/item.context";
 import { ItemInput, ItemButton, ImageSelector, ItemContainer } from "./item-management.screen.styles";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { Text } from "../../../../components/typography/text.component";
@@ -125,6 +123,8 @@ export const ItemManagementScreen = ({ navigation }) => {
                   <ImageSelector source={require('../../../../assets/images/camera.png')}  />
                 }
               </TouchableOpacity>
+              <Spacer position="bottom" size="large" />
+              <Text style={{alignSelf: 'center'}} variant="caption">Click image to add picture</Text>
             </Spacer>
             <Spacer size="large">
               <Dropdown

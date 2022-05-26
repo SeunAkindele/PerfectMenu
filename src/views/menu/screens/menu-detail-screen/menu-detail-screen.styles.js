@@ -1,7 +1,6 @@
 import styled from "styled-components/native";
-import {Button} from "react-native-paper";
+import {Button, ProgressBar} from "react-native-paper";
 import {View} from "react-native";
-import { ProgressBar } from 'react-native-paper';
 import { colors } from "../../../../components/theme/colors";
 
 export const OrderButton = styled(Button).attrs({

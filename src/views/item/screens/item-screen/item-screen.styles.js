@@ -1,8 +1,7 @@
 import styled from "styled-components/native";
 import {FlatList, View, TouchableOpacity} from "react-native";
-import {AntDesign, Ionicons} from "@expo/vector-icons";
-import { ProgressBar } from 'react-native-paper';
-import {colors} from "../../../../components/theme/colors";
+import {AntDesign} from "@expo/vector-icons";
+import { Avatar } from "react-native-paper";
 
 export const SearchContainer = styled(View)`
   padding: ${(props) => props.theme.space[3]};
@@ -30,4 +29,10 @@ export const ItemManagement = styled(TouchableOpacity)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const ItemIcon = styled(Avatar.Icon).attrs({
+  size: 128,
+})`
+  background-color: ${(props) => props.bg || props.theme.colors.brand.primary};
 `;
