@@ -20,6 +20,14 @@ export const DisableButton = styled(Button).attrs({
   align-self: center;
 `;
 
+export const EnableButton = styled(Button).attrs({
+  color: colors.ui.success
+})`
+  padding: ${(props) => props.theme.space[2]};
+  width: 90%;
+  align-self: center;
+`;
+
 export const Rating = styled(View)`
   flex-direction: row;
   padding-top: ${(props) => props.theme.space[2]};
