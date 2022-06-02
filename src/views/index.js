@@ -13,6 +13,7 @@ import { ItemManagementContextProvider } from "./item/context/item-management.co
 import { LoginContextProvider } from "./account/context/login.context";
 import { RegisterContextProvider } from "./account/context/register.context";
 import { Navigation } from "../components/navigation";
+import { SettingContextProvider } from "./setting/context/setting.context";
 
 const PerfectMenu = () => {
   
@@ -31,25 +32,27 @@ const PerfectMenu = () => {
   return (
     <>    
       <ThemeProvider theme={theme}>
-        <RegisterContextProvider>
-          <LoginContextProvider>
-            <ItemManagementContextProvider>
-              <ItemContextProvider>
-                <CustomerContextProvider>
-                  <StaffContextProvider>
-                    <OrderContextProvider>
-                      <CartContextProvider>
-                        <MenuContextProvider>
-                          <Navigation />
-                        </MenuContextProvider>
-                      </CartContextProvider>
-                    </OrderContextProvider>
-                  </StaffContextProvider>
-                </CustomerContextProvider>
-              </ItemContextProvider>
-            </ItemManagementContextProvider>
-          </LoginContextProvider>
-        </RegisterContextProvider>
+          <RegisterContextProvider>
+            <LoginContextProvider>
+              <SettingContextProvider>
+                <ItemManagementContextProvider>
+                  <ItemContextProvider>
+                    <CustomerContextProvider>
+                      <StaffContextProvider>
+                        <OrderContextProvider>
+                          <CartContextProvider>
+                            <MenuContextProvider>
+                              <Navigation />
+                            </MenuContextProvider>
+                          </CartContextProvider>
+                        </OrderContextProvider>
+                      </StaffContextProvider>
+                    </CustomerContextProvider>
+                  </ItemContextProvider>
+                </ItemManagementContextProvider>
+              </SettingContextProvider>
+            </LoginContextProvider>
+          </RegisterContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>

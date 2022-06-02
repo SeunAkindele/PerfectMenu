@@ -82,14 +82,14 @@ export const MenuDetailScreen = ({ route, navigation }) => {
           <Spacer position="bottom" size="small" />
           <Text variant="caption">Rate {ucFirst(menu.name)}</Text>
           <Spacer position="top" size="medium" />
-          <RatesProgress>
-            <Text variant="label">1</Text>
-            <Progress progress={menu.ratings.one} />
-            </RatesProgress>
-            <Spacer position="bottom" size="small" />
+         
             <RatesProgress>
-            <Text variant="label">2</Text>
-            <Progress progress={menu.ratings.two} />
+            <Text variant="label">5</Text>
+            <Progress progress={menu.ratings.five} />
+          </RatesProgress>
+          <RatesProgress>
+            <Text variant="label">4</Text>
+            <Progress progress={menu.ratings.four} />
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
@@ -98,15 +98,16 @@ export const MenuDetailScreen = ({ route, navigation }) => {
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
-            <Text variant="label">4</Text>
-            <Progress progress={menu.ratings.four} />
+            <Text variant="label">2</Text>
+            <Progress progress={menu.ratings.two} />
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
-            <Text variant="label">5</Text>
-            <Progress progress={menu.ratings.five} />
-          </RatesProgress>
-          
+            <Text variant="label">1</Text>
+            <Progress progress={menu.ratings.one} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
+            
           <Spacer position="bottom" size="large" />
         </Spacer>
 

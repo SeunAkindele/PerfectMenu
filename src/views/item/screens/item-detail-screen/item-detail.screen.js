@@ -62,14 +62,13 @@ export const ItemDetailScreen = ({ route, navigation }) => {
           <Spacer position="top" size="large" />
           <Text variant="caption">Customers' Ratings for {ucFirst(item.name)}</Text>
           <Spacer position="top" size="medium" />
-          <RatesProgress>
-            <Text variant="label">1</Text>
-            <Progress progress={item.ratings.one} />
-            </RatesProgress>
-            <Spacer position="bottom" size="small" />
             <RatesProgress>
-            <Text variant="label">2</Text>
-            <Progress progress={item.ratings.two} />
+            <Text variant="label">5</Text>
+            <Progress progress={item.ratings.five} />
+          </RatesProgress>
+          <RatesProgress>
+            <Text variant="label">4</Text>
+            <Progress progress={item.ratings.four} />
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
@@ -78,14 +77,15 @@ export const ItemDetailScreen = ({ route, navigation }) => {
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
-            <Text variant="label">4</Text>
-            <Progress progress={item.ratings.four} />
+            <Text variant="label">2</Text>
+            <Progress progress={item.ratings.two} />
             </RatesProgress>
             <Spacer position="bottom" size="small" />
             <RatesProgress>
-            <Text variant="label">5</Text>
-            <Progress progress={item.ratings.five} />
-          </RatesProgress>
+            <Text variant="label">1</Text>
+            <Progress progress={item.ratings.one} />
+            </RatesProgress>
+            <Spacer position="bottom" size="small" />
           <Spacer position="bottom" size="large" />
         </Spacer>
        
