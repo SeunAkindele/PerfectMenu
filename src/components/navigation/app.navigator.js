@@ -9,7 +9,8 @@ import {AdminNavigator} from "./admin.navigator";
 import { SettingNavigator } from "./setting.navigator";
 import { CustomerNavigator } from "./customer.navigator";
 import { ItemNavigator } from "./item.navigator";
-import {Ionicons, MaterialIcons, Feather} from "@expo/vector-icons";
+import { DashboardNavigator } from "./dashboard.navigator";
+import {Ionicons, MaterialIcons, MaterialCommunityIcons, Feather} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,7 @@ export const AppNavigator = ({authorization}) => {
     } else if(authorization == 1) {
       return (
         <>
-          <Tab.Screen name="Dashboard" component={StaffNavigator} />
+          <Tab.Screen name="Dashboard" component={DashboardNavigator} />
           <Tab.Screen name="Order" component={StaffNavigator} />
           <Tab.Screen name="Customer" component={CustomerNavigator} />
           <Tab.Screen name="Setting" component={SettingNavigator} />
@@ -37,7 +38,7 @@ export const AppNavigator = ({authorization}) => {
     } else if(authorization == 2) {
       return (
         <>
-        <Tab.Screen name="Dashboard" component={CustomerNavigator} />
+        <Tab.Screen name="Dashboard" component={DashboardNavigator} />
         <Tab.Screen name="Order" component={StaffNavigator} />
          <Tab.Screen name="Customer" component={CustomerNavigator} />
           <Tab.Screen name="Staff" component={AdminNavigator} />
@@ -57,6 +58,9 @@ export const AppNavigator = ({authorization}) => {
           if (route.name === 'Menu') {
             iconName = "md-restaurant";
             return <Ionicons name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Dashboard') {
+            iconName = "view-dashboard";
+            return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
           } else if (route.name === 'Cart') {
             iconName = "shopping-cart";
             return <MaterialIcons name={iconName} size={size} color={color} />;
