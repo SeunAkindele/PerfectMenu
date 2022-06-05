@@ -27,17 +27,17 @@ export const SettingScreen = ({ navigation }) => {
       <List.Section>
         <SettingsItem
           title="Logout"
-          left={(props) => <List.Icon {...props} color="black" icon="door" />}
+          left={(props) => <List.Icon {...props} color="black" icon="power" />}
           onPress={() => onLogout()}
         />
          <SettingsItem
           title={user.name && ucFirst(user.name)}
-          left={(props) => <List.Icon {...props} color="black" icon="door" />}
+          left={(props) => <List.Icon {...props} color="black" icon="account" />}
         />
 
         <SettingsItem
           title={user.name && ucFirst(user.phone)}
-          left={(props) => <List.Icon {...props} color="black" icon="door" />}
+          left={(props) => <List.Icon {...props} color="black" icon="phone" />}
         />
       </List.Section>
       </ScrollView>

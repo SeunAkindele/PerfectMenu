@@ -1,63 +1,68 @@
 import React, {useContext, useState} from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
-import {Text} from "../../../../components/typography/text.component";
 import { LoginContext } from '../../../account/context/login.context';
-import { ucWord } from "../../../../components/utility/functions";
-import { LineChart } from "react-native-chart-kit";
-import { DashboardContainer, DashboardCardCover, DashboardProfile, User, DashboardProfileCover, DashboardSales } from "./dashboard.screen.styles";
-import { Dimensions } from "react-native";
+import { DashboardContainer, DashboardCardCover } from "./dashboard.screen.styles";
+import {Profile} from "../../components/profile/profile.component";
+import { Sales } from "../../components/sales/sales.component";
+import { FadeInView } from "../../../../components/animations/fade.animation";
+import { IsLoading } from "../../../../components/loading/loading.component";
+import { ErrorContainer } from "../../../../components/utility/error.component.styles";
+import { DashboardContext } from "../../context/dashboard.context";
+import { Text } from "../../../../components/typography/text.component";
 
 export const DashboardScreen = ({navigation}) => {
-
   const { user } = useContext(LoginContext);
+  const {  
+    getDashboard, 
+    loading,
+    salesData
+  } = useContext(DashboardContext);
 
-  const screenWidth = Dimensions.get("window").width;
+  const [loadData, setLoadData] = useState(false);
 
-  const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => { 
+        getDashboard();
+      }, 2000);
+    }, [])
+  );
 
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        strokeWidth: 2 // optional
-      }
-    ],
-    legend: ["Rainy Days"] // optional
-  };
+  const refresh = () => {
+    setLoadData(true);
+    setTimeout(() => { 
+      getDashboard();
+      setLoadData(false);
+    }, 2000);
+  }
 
   return (
     <SafeArea>
-      <DashboardContainer>
-        <DashboardCardCover>
-          <DashboardProfileCover>
-            <Text variant="tag" color="black">Dashboard</Text>
-            <DashboardProfile>
-              <Text variant="small" color="black">{ucWord(user.name)}</Text>
-              <User name="user-circle-o" />
-            </DashboardProfile>
-          </DashboardProfileCover>
-          <DashboardSales>
-          <LineChart
-            data={data}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            bezier
-          />
-          </DashboardSales>
-        </DashboardCardCover>
-      </DashboardContainer>
+      <IsLoading loading={loading} />
+      {loading 
+        ?
+        <ErrorContainer>
+          <Text variant="error">Fetching Data...</Text>
+        </ErrorContainer>
+        :
+        <DashboardContainer
+          data={[{id: 1}]}
+          keyExtractor={(item) => item.id}
+          onRefresh={refresh}
+          refreshing={loadData}
+          renderItem={({ item }) => (
+            <FadeInView>
+              <DashboardCardCover elevation={5}>
+                <Profile user={user} />
+                <Sales salesData={salesData} />
+              </DashboardCardCover>
+              
+              
+            </FadeInView>
+          )}
+        />
+      }
     </SafeArea>
   )
 }
