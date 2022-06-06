@@ -20,8 +20,29 @@ export const CartSummaryScreen = ({route, navigation}) => {
   const { cart, total, vat } = route.params;
 
   const delivery = 1000;
-  const salesSum = parseInt(total) + parseInt(vat) + delivery;
- 
+
+  // Adding paystack charges to sales sum
+  let pays;
+
+  const subtotal = parseInt(total) + parseInt(vat) + delivery;
+
+  if(subtotal < 2500) {
+    pays = 1.5/100 * subtotal;
+  } else {
+    pays = (1.5/100 * subtotal) + 100;
+  }
+
+  const temp = subtotal + pays;
+
+  let per;
+  if(temp < 2500) {
+    per = 1.5/100 * temp;
+  } else {
+    per = (1.5/100 * temp) + 100;
+  }
+
+  const salesSum = subtotal + per;
+
   return (
     <SafeArea>
       <CartSummaryContainer>
@@ -49,7 +70,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
             </CartSummarySubTotal>
             <CartSummaryList>
               <Text variant="tag">VAT</Text>
-              <Text variant="tag">₦{format(vat, 2)}</Text>
+              <Text variant="tag">₦{format(vat + per, 2)}</Text>
             </CartSummaryList>
             <CartSummaryList>
               <Text variant="tag">Delivery fee</Text>
@@ -71,7 +92,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
               <Paystack  
                 paystackKey="pk_test_6f3f86bd6f572cf197b3e66509c6988da6a27c4c"
                 paystackSecretKey="sk_test_d1971cb1c1406c636feef71eaba78f8c62c6851e"
-                amount={salesSum}
+                amount={salesSum.toFixed(2)}
                 billingEmail={email}
                 billingMobile={phone}
                 billingName={name}
