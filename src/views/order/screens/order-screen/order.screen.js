@@ -33,10 +33,10 @@ export const OrderScreen = ({navigation}) => {
 
   const reload = () => {
     setLoadOrder(true);
-      setTimeout(() => { 
+     
         getOrder();
         setLoadOrder(false);
-      }, 2000);
+      
   }
 
   const countDown = () => {

@@ -10,6 +10,7 @@ export const DashboardContextProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
   const [salesData, setSalesData] = useState([]);
+  const [orderStatusData, setOrderStatusData] = useState("");
 
   const getDashboard = () => {
     const inputs = {
@@ -20,6 +21,7 @@ export const DashboardContextProvider = ({ children }) => {
       if(response['success'] === true) {
         if(response['data']){
           setSalesData(response['data']['salesData']);
+          setOrderStatusData(response['data']['orderStatusData']);
         } 
         setLoading(false);
       } else {
@@ -32,6 +34,7 @@ export const DashboardContextProvider = ({ children }) => {
   return <DashboardContext.Provider value={{
     salesData,
     getDashboard,
-    loading
+    loading,
+    orderStatusData
   }}>{children}</DashboardContext.Provider>;
 }

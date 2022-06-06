@@ -10,13 +10,16 @@ import { IsLoading } from "../../../../components/loading/loading.component";
 import { ErrorContainer } from "../../../../components/utility/error.component.styles";
 import { DashboardContext } from "../../context/dashboard.context";
 import { Text } from "../../../../components/typography/text.component";
+import { Order } from "../../components/order/order.component";
+import { Spacer } from "../../../../components/spacer/spacer.component";
 
 export const DashboardScreen = ({navigation}) => {
   const { user } = useContext(LoginContext);
   const {  
     getDashboard, 
     loading,
-    salesData
+    salesData,
+    orderStatusData
   } = useContext(DashboardContext);
 
   const [loadData, setLoadData] = useState(false);
@@ -57,8 +60,10 @@ export const DashboardScreen = ({navigation}) => {
                 <Profile user={user} />
                 <Sales salesData={salesData} />
               </DashboardCardCover>
-              
-              
+              <DashboardCardCover elevation={5}>
+                <Order orderStatusData={orderStatusData} />
+              </DashboardCardCover>
+              <Spacer position="top" size="large" />
             </FadeInView>
           )}
         />
