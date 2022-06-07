@@ -12,14 +12,16 @@ import { DashboardContext } from "../../context/dashboard.context";
 import { Text } from "../../../../components/typography/text.component";
 import { Order } from "../../components/order/order.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
+import { MostSold } from "../../components/mostSold/most-sold.component";
 
 export const DashboardScreen = ({navigation}) => {
-  const { user } = useContext(LoginContext);
+  const { user, authorization } = useContext(LoginContext);
   const {  
     getDashboard, 
     loading,
     salesData,
-    orderStatusData
+    orderStatusData,
+    mostSoldItem
   } = useContext(DashboardContext);
 
   const [loadData, setLoadData] = useState(false);
@@ -63,6 +65,13 @@ export const DashboardScreen = ({navigation}) => {
               <DashboardCardCover elevation={5}>
                 <Order orderStatusData={orderStatusData} />
               </DashboardCardCover>
+              {
+                authorization == 2
+                &&
+                <DashboardCardCover elevation={5}>
+                  <MostSold mostSoldData={mostSoldItem} />
+                </DashboardCardCover>
+              }
               <Spacer position="top" size="large" />
             </FadeInView>
           )}

@@ -11,6 +11,7 @@ export const DashboardContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [salesData, setSalesData] = useState([]);
   const [orderStatusData, setOrderStatusData] = useState("");
+  const [mostSoldItem, setMostSoldItem] = useState("");
 
   const getDashboard = () => {
     const inputs = {
@@ -18,10 +19,12 @@ export const DashboardContextProvider = ({ children }) => {
     }
     
     api("dashboard", {request: inputs}, token, response => {
+      // console.log(response['data']);
       if(response['success'] === true) {
         if(response['data']){
           setSalesData(response['data']['salesData']);
           setOrderStatusData(response['data']['orderStatusData']);
+          setMostSoldItem(response['data']['mostSoldItem'])
         } 
         setLoading(false);
       } else {
@@ -35,6 +38,7 @@ export const DashboardContextProvider = ({ children }) => {
     salesData,
     getDashboard,
     loading,
-    orderStatusData
+    orderStatusData,
+    mostSoldItem
   }}>{children}</DashboardContext.Provider>;
 }

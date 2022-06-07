@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {View} from "react-native";
-import {Text} from "../../../../components/typography/text.component";
 import { LineChart } from "react-native-chart-kit";
 import {  DashboardSales } from "./sales.component.styles";
 import { Rect, Text as TextSVG, Svg } from "react-native-svg";
