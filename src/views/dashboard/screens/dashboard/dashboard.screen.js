@@ -13,15 +13,21 @@ import { Text } from "../../../../components/typography/text.component";
 import { Order } from "../../components/order/order.component";
 import { Spacer } from "../../../../components/spacer/spacer.component";
 import { MostSold } from "../../components/mostSold/most-sold.component";
+import { Customers } from "../../components/customers/customers.component";
+import { Items } from "../../components/items/items.component";
+import { Staffs } from "../../components/staffs/staffs.component";
 
-export const DashboardScreen = ({navigation}) => {
+export const DashboardScreen = () => {
   const { user, authorization } = useContext(LoginContext);
   const {  
     getDashboard, 
     loading,
     salesData,
     orderStatusData,
-    mostSoldItem
+    mostSoldItem,
+    customers,
+    staffs,
+    items
   } = useContext(DashboardContext);
 
   const [loadData, setLoadData] = useState(false);
@@ -68,9 +74,21 @@ export const DashboardScreen = ({navigation}) => {
               {
                 authorization == 2
                 &&
-                <DashboardCardCover elevation={5}>
-                  <MostSold mostSoldData={mostSoldItem} />
-                </DashboardCardCover>
+                <>
+                  <DashboardCardCover elevation={5}>
+                    <Customers customers={customers} />
+                  </DashboardCardCover>
+                  
+                  <DashboardCardCover elevation={5}>
+                    <MostSold mostSoldData={mostSoldItem} />
+                  </DashboardCardCover>
+                  <DashboardCardCover elevation={5}>
+                    <Items items={items} />
+                  </DashboardCardCover>
+                  <DashboardCardCover elevation={5}>
+                    <Staffs staffs={staffs} />
+                  </DashboardCardCover>
+                </>
               }
               <Spacer position="top" size="large" />
             </FadeInView>

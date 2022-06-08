@@ -105,7 +105,7 @@ export const CustomerOrderDetailsScreen = ({navigation, route}) => {
               staff_name
               &&
               <CustomerOrderSummaryList>
-                <Text variant="tag">SOLD BY</Text>
+                <Text variant="tag">STAFF</Text>
                 <Text variant="tag">{ucWord(staff_name)}</Text>
               </CustomerOrderSummaryList>
             }

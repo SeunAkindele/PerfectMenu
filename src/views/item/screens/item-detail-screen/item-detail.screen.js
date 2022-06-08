@@ -204,7 +204,7 @@ export const ItemDetailScreen = ({ route, navigation }) => {
           :
           <Spacer position="bottom" size="large">
             <EnableButton onPress={() => Alert.alert(
-                      "Enable Item",
+                      "Activate Item",
                       "Are you sure?",
                       [
                         {
@@ -214,7 +214,7 @@ export const ItemDetailScreen = ({ route, navigation }) => {
                         { text: "OK", onPress: () => onEnableItem(navigation, item.id)}
                       ],
                       { cancelable: false }
-                    )} mode="contained">ENABLE ITEM</EnableButton>
+                    )} mode="contained">ACTIVATE ITEM</EnableButton>
           </Spacer>
         }
       </ScrollView>

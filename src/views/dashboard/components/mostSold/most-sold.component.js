@@ -22,7 +22,7 @@ export const MostSold = ({mostSoldData}) => {
           <Icon source={{ uri: `http://localhost/PerfectMenuApi/vendor/images/${mostSoldData.image}`}} />
           <Text variant="label">{mostSoldData.name}</Text>
         </MostSoldInnerContainer>
-        <Text>{mostSoldData.qty}</Text>
+        <Text variant="title">{mostSoldData.qty}</Text>
         <SvgXml xml={starGold} width={30} height={30} />
       </MostSoldContainer>
         :

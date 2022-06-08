@@ -13,7 +13,6 @@ import { ErrorContainer } from '../../../../components/utility/error.component.s
 import { strlen } from '../../../../components/utility/functions';
 
 export const OrderScreen = ({navigation}) => {
-  const [time, setTime] = useState(0);
 
   const { order, getOrder, loading, pending } = useContext(OrderContext);
   const [loadOrder, setLoadOrder] = useState(false);
@@ -21,36 +20,16 @@ export const OrderScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => { 
       getOrder();
-      load();
     }, 2000);
   }, []);
 
-  const load = () => {
-    if(pending.includes("2")){
-      setTime(1);
-    }
-  }
-
   const reload = () => {
     setLoadOrder(true);
-     
+    setTimeout(() => { 
         getOrder();
         setLoadOrder(false);
-      
+      }, 2000);
   }
-
-  const countDown = () => {
-    setTime(time - 0.01);
-  }
-
-  if(pending.includes("2")){
-    if(time > 0){
-      setTimeout(countDown, 1000);
-    } else {
-      reload();
-      load();
-    }
-  } 
 
   return (
     <SafeArea>
@@ -85,7 +64,6 @@ export const OrderScreen = ({navigation}) => {
           {pending.includes("2") &&
           <>
             <Refresh name="ios-refresh-circle" onPress={() => reload()} />
-            <Progress progress={time} />
           </>}
          
         </>

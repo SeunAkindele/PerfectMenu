@@ -56,7 +56,7 @@ export const Order = ({orderStatusData}) => {
   return (
    
     <DashboardOrder>
-      <Text variant="tag" style={{color: 'grey', alignSelf: 'center'}}>Order Status for Today</Text>
+      <Text variant="tag" style={{color: 'grey', alignSelf: 'center'}}>Order Status Today</Text>
       <Spacer position="top" size="large" />
       {
         orderStatusData.total > 0

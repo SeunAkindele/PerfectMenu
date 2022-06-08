@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { View } from "react-native";
-import {FontAwesome} from "@expo/vector-icons";
+import {FontAwesome, Entypo} from "@expo/vector-icons";
 
 export const DashboardProfile = styled(View)`
   justify-content: flex-end;
@@ -16,8 +16,13 @@ export const DashboardProfileCover = styled(View)`
   padding-bottom: 20px;
 `;
 
+export const Active = styled(Entypo)`
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) => props.theme.colors.ui.success};
+`;
+
 export const User = styled(FontAwesome)`
   font-size: ${(props) => props.theme.fontSizes.body};
   padding: ${(props) => props.theme.space[2]};
-  color: ${(props) => props.theme.colors.ui.error};
+  color: ${(props) => props.theme.colors.brand.primary};
 `;

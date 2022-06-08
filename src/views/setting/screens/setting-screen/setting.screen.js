@@ -17,7 +17,7 @@ export const SettingScreen = ({ navigation }) => {
       <ScrollView>
       <AvatarContainer>
       <Spacer position="top" size="large">
-        <Avatar.Icon size={180} icon="human" backgroundColor="#ccc" />
+        <Avatar.Icon size={150} icon="human" backgroundColor="#ccc" />
         </Spacer>
         <Spacer position="top" size="large">
         <Text variant="label">{user.email}</Text>
@@ -38,6 +38,11 @@ export const SettingScreen = ({ navigation }) => {
         <SettingsItem
           title={user.name && ucFirst(user.phone)}
           left={(props) => <List.Icon {...props} color="black" icon="phone" />}
+        />
+
+        <SettingsItem
+          title={user.name && ucFirst(user.location)}
+          left={(props) => <List.Icon {...props} color="black" icon="map" />}
         />
       </List.Section>
       </ScrollView>

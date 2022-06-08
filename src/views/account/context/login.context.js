@@ -55,6 +55,6 @@ export const LoginContextProvider = ({ children }) => {
     isAuthenticated,
     authorization,
     token,
-    user,
+    user
   }}>{children}</LoginContext.Provider>;
 }
