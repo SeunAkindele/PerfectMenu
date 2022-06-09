@@ -7,12 +7,13 @@ import { IsLoading } from "../../../../components/loading/loading.component";
 import {TextInput} from "react-native-paper";
 
 export const ProfileManagement = ({ route }) => {
-  const {userphone} = route.params;
+  const {userphone, userAddress} = route.params;
 
   const { loading, manageProfile } = useContext(SettingContext);
 
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState(userphone);
+  const [address, setAddress] = useState(userAddress);
   const [secured, setSecured] = useState(true);
  
   return (
@@ -41,9 +42,20 @@ export const ProfileManagement = ({ route }) => {
         </Spacer>
 
         <Spacer size="large">
+          <ProfileInput
+            label={address ? address : 'Address'}
+            multiline
+            numberOfLines={5}
+            style={{height: 150}}
+            autoCapitalize="none"
+            onChangeText={(u) => setAddress(u)}
+          />
+        </Spacer>
+
+        <Spacer size="large">
           <ProfileButton
             mode="contained"
-            onPress={() => manageProfile(phone, password)}
+            onPress={() => manageProfile(phone, password, address)}
           >
             Save
           </ProfileButton>

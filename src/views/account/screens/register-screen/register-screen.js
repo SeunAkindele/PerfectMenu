@@ -17,6 +17,7 @@ export const RegisterScreen = ({ navigation }) => {
   const [phone, setPhone] = useState("");
   const [secured, setSecured] = useState(true);
   const [location, setLocation] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => getLocations(), []);
 
@@ -72,13 +73,21 @@ export const RegisterScreen = ({ navigation }) => {
           data={locations} onValueChange={ item => setLocation(item)} placeholder='Select Location *'
         />
         </Spacer>
+        <AuthInput
+          label="Full address"
+          multiline
+          numberOfLines={5}
+          style={{height: 150}}
+          autoCapitalize="none"
+          onChangeText={(address) => setAddress(address)}
+        />
       
         <Spacer size="large">
           <AuthButton
             icon="email"
             mode="contained"
             disabled={loading && true}
-            onPress={() => onRegister(name, email, phone, password, location, navigation)}
+            onPress={() => onRegister(name, email, phone, password, location, address, navigation)}
           >
             {loading ? 'Loading' : 'Register'}
           </AuthButton>

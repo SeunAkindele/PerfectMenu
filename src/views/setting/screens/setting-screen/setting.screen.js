@@ -46,7 +46,7 @@ export const SettingScreen = ({ navigation }) => {
         />
       </List.Section>
       </ScrollView>
-      <ProfileManagement onPress={() => navigation.navigate("ProfileManagement", {userphone: user.phone})}>
+      <ProfileManagement onPress={() => navigation.navigate("ProfileManagement", {userphone: user.phone, userAddress: user.address})}>
           <Text color="white" variant="label">Manage Profile</Text>
           <Arrow name="up" />
         </ProfileManagement>

@@ -13,7 +13,7 @@ import { StaffContext } from '../../context/staff.context';
 export const StaffOrderDetailsScreen = ({route, navigation}) => {
  
   const {item} = route.params;
-  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_id, status, staff_name} = item;
+  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_address, customer_id, status, staff_name} = item;
   const total = parseInt(amount) + parseInt(vat_value) + parseInt(delivery_fee);
 
   const {cancleOrder, dispatchOrder} = useContext(StaffContext);
@@ -95,11 +95,13 @@ export const StaffOrderDetailsScreen = ({route, navigation}) => {
               <Text variant="tag" color="white">Dispatch Order</Text>
             </Dispatch>}
             <StaffOrderSummaryList>
-              <Text variant="tag">CUSTOMER</Text>
+              <Text variant="tag">Customer: {ucFirst(customer_name)}</Text>
             </StaffOrderSummaryList>
             <StaffOrderSummaryList>
-              <Text variant="tag">{ucWord(customer_name)}</Text>
-              <Text variant="tag">{customer_phone}</Text>
+              <Text variant="tag">Phone: {customer_phone}</Text>
+            </StaffOrderSummaryList>
+            <StaffOrderSummaryList>
+              <Text variant="tag">Address: {ucFirst(customer_address)}</Text>
             </StaffOrderSummaryList>
             {
               staff_name

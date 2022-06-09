@@ -30,8 +30,8 @@ export const RegisterContextProvider = ({ children }) => {
     });
   }
 
-  const onRegister = (name, email, phone, password, location, navigation) => {
-    if(checkEmptyInput([name, email, phone, password, location])) {
+  const onRegister = (name, email, phone, password, location, address, navigation) => {
+    if(checkEmptyInput([name, email, phone, password, address, location])) {
       alert("None of the fields must be empty");
       return false;
     }
@@ -41,6 +41,7 @@ export const RegisterContextProvider = ({ children }) => {
       phone, 
       password,
       location,
+      address,
       page: ""
     }
     setLoading(true);

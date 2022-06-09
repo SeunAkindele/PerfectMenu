@@ -8,11 +8,12 @@ export const SettingContextProvider = ({ children }) => {
   const {token, onLogout} = useContext(LoginContext);
   const [loading, setLoading] = useState(false);
 
-  const manageProfile = (phone, password) => {
+  const manageProfile = (phone, password, address) => {
     const inputs = {
       page: 'manageProfile',
       phone: phone,
-      password: password
+      password: password,
+      address: address
     }
 
     api("setting", {request: inputs}, token, response => {

@@ -13,7 +13,7 @@ import { Trash } from '../../components/customer-order-info-card/customer-order-
 export const CustomerOrderDetailsScreen = ({navigation, route}) => {
 
   const {item} = route.params;
-  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_id, status, staff_name} = item;
+  const {amount, delivery_fee, token, vat_value, order, customer_name, customer_phone, customer_address, customer_id, status, staff_name} = item;
   const total = parseInt(amount) + parseInt(vat_value) + parseInt(delivery_fee);
 
   const {cancleOrder, dispatchOrder} = useContext(CustomerContext);
@@ -95,11 +95,13 @@ export const CustomerOrderDetailsScreen = ({navigation, route}) => {
               <Text variant="tag" color="white">Dispatch Order</Text>
             </Dispatch>}
             <CustomerOrderSummaryList>
-              <Text variant="tag">CUSTOMER</Text>
+              <Text variant="tag">Customer: {ucFirst(customer_name)}</Text>
             </CustomerOrderSummaryList>
             <CustomerOrderSummaryList>
-              <Text variant="tag">{ucWord(customer_name)}</Text>
-              <Text variant="tag">{customer_phone}</Text>
+              <Text variant="tag">Phone: {customer_phone}</Text>
+            </CustomerOrderSummaryList>
+            <CustomerOrderSummaryList>
+              <Text variant="tag">Address: {customer_address}</Text>
             </CustomerOrderSummaryList>
             {
               staff_name
