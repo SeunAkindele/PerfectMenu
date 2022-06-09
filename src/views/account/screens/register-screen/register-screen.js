@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from "react";
-import { RegisterBackground, RegisterCover, RegisterContainer, AuthInput, AuthButton, Title, ErrorContainer } from "./register-screen.styles";
+import {ScrollView} from "react-native";
+import { RegisterBackground, RegisterCover, RegisterContainer, AuthInput, AuthButton, Title, BackButton } from "./register-screen.styles";
 import { Spacer } from "../../../../components/spacer/spacer.component";
-import { Text } from "../../../../components/typography/text.component";
 import {TextInput} from "react-native-paper";
 import { RegisterContext } from "../../context/register.context";
 import { IsLoading } from "../../../../components/loading/loading.component";
@@ -23,11 +23,12 @@ export const RegisterScreen = ({ navigation }) => {
 
   return (
     <RegisterBackground>
+     
       <IsLoading loading={loading} />
       <RegisterCover />
       <Title>Perfect Menu</Title>
       <RegisterContainer>
-     
+      <ScrollView>
         <AuthInput
           label="Full name"
           // value={}
@@ -76,8 +77,8 @@ export const RegisterScreen = ({ navigation }) => {
         <AuthInput
           label="Full address"
           multiline
-          numberOfLines={5}
-          style={{height: 150}}
+          numberOfLines={4}
+          style={{height: 100}}
           autoCapitalize="none"
           onChangeText={(address) => setAddress(address)}
         />
@@ -93,12 +94,16 @@ export const RegisterScreen = ({ navigation }) => {
           </AuthButton>
         
         </Spacer>
-      </RegisterContainer>
-      <Spacer size="large">
-        <AuthButton mode="contained" onPress={() => navigation.goBack()}>
+        <Spacer size="large">
+        <BackButton mode="contained" onPress={() => navigation.goBack()}>
           Back
-        </AuthButton>
+        </BackButton>
       </Spacer>
+        </ScrollView>
+        
+      </RegisterContainer>
+     
+
     </RegisterBackground>
   );
 }

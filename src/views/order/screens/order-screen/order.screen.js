@@ -1,5 +1,5 @@
-import React, {useContext, useState, useEffect} from 'react';
-// import { useFocusEffect } from '@react-navigation/native';
+import React, {useContext, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import {  OrderIcon, OrderList, OrderHistory, Arrow, Progress, Refresh } from './order-screen.styles';
@@ -17,11 +17,13 @@ export const OrderScreen = ({navigation}) => {
   const { order, getOrder, loading, pending } = useContext(OrderContext);
   const [loadOrder, setLoadOrder] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => { 
-      getOrder();
-    }, 2000);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => { 
+        getOrder();
+      }, 2000);
+    }, [])
+  );
 
   const reload = () => {
     setLoadOrder(true);

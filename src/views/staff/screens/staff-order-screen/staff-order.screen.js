@@ -1,4 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { StaffOrderList, StaffOrderHistory, Arrow, Progress, Refresh, SearchContainer, StaffOrderIcon } from './staff-order-screen.styles';
@@ -19,12 +20,13 @@ export const StaffOrderScreen = ({navigation}) => {
   const [loadOrder, setLoadOrder] = useState(false);
 
 
-  useEffect(() => {
-    setTimeout(() => { 
-      getOrder();
-    }, 2000);
-      
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => { 
+        getOrder();
+      }, 2000);
+    }, [])
+  );
 
 
   const reload = () => {

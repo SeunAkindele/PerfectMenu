@@ -1,4 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 import { SafeArea } from "../../../../components/utility/safe-area.component";
 import { StaffOrderList, StaffOrderHistory, Arrow, SearchContainer, StaffOrderIcon } from './admin-staff-order-screen.styles';
@@ -19,13 +20,13 @@ export const AdminStaffOrderScreen = ({navigation, route}) => {
 
   const {staff} = route.params;
 
-
-  useEffect(() => {
-    setTimeout(() => { 
-      getStaffOrder(staff.id);
-    }, 2000);
-      
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => { 
+        getStaffOrder(staff.id);
+      }, 2000);
+    }, [])
+  );
 
   const reload = () => {
     setLoadOrder(true);

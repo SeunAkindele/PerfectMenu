@@ -25,6 +25,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
   let pays;
 
   const subtotal = parseInt(total) + parseInt(vat) + delivery;
+  const offlineTotal = parseInt(total) + parseInt(vat) + delivery;
 
   if(subtotal < 2500) {
     pays = 1.5/100 * subtotal;
@@ -70,7 +71,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
             </CartSummarySubTotal>
             <CartSummaryList>
               <Text variant="tag">VAT</Text>
-              <Text variant="tag">₦{format(vat + per, 2)}</Text>
+              <Text variant="tag">₦{format(vat, 2)}</Text>
             </CartSummaryList>
             <CartSummaryList>
               <Text variant="tag">Delivery fee</Text>
@@ -79,7 +80,7 @@ export const CartSummaryScreen = ({route, navigation}) => {
             <Spacer position="top" size="medium" />
             <CartSummaryTotal>
               <Text variant="tag">Total</Text>
-              <Text variant="tag">₦{format(salesSum)}</Text>
+              <Text variant="tag">₦{format(offlineTotal.toFixed(2))}</Text>
             </CartSummaryTotal>
             <Spacer position="top" size="medium" />
             <Online onPress={() => setPaymentStatus(true)}>

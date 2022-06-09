@@ -35,6 +35,14 @@ export const AuthButton = styled(Button).attrs({
   padding: ${(props) => props.theme.space[2]};
 `;
 
+export const BackButton = styled(Button).attrs({
+  color: colors.brand.primary
+})`
+  padding: ${(props) => props.theme.space[2]};
+  width: 40%;
+  align-self: center;
+`;
+
 export const Title = styled(Text)`
   font-size: 25px;
 `;
