@@ -1,17 +1,15 @@
 import React, {useContext, useState} from "react";
-import {TouchableOpacity} from "react-native";
-import { LoginBackground, LoginCover, LoginContainer, AuthInput, AuthButton, Title, ErrorContainer } from "./login-screen.styles";
+import { LoginBackground, LoginCover, LoginContainer, AuthInput, AuthButton, Title } from "./change-password-screen.styles";
 import { Spacer } from "../../../../components/spacer/spacer.component";
-import { Text } from "../../../../components/typography/text.component";
-import {TextInput} from "react-native-paper";
 import { LoginContext } from "../../context/login.context";
 import { IsLoading } from "../../../../components/loading/loading.component";
+import {TextInput} from "react-native-paper";
 
-export const LoginScreen = ({ navigation }) => {
+export const ChangePasswordScreen = ({ navigation, route }) => {
 
-  const { onLogin, loading } = useContext(LoginContext);
-
-  const [email, setEmail] = useState("");
+  const { onChangePassword, loading } = useContext(LoginContext);
+  const {email} = route.params;
+  const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [secured, setSecured] = useState(true);
 
@@ -21,17 +19,17 @@ export const LoginScreen = ({ navigation }) => {
       <LoginCover />
       <Title>Perfect Menu</Title>
       <LoginContainer>
-      <AuthInput
-          label="E-mail"
+        <AuthInput
+          label="Verification Code"
           // value={}
           textContentType="emailAddress"
           keyboardType="email-address"
           autoCapitalize="none"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(code) => setCode(code)}
         />
         <Spacer size="large">
           <AuthInput
-            label="Password"
+            label="New Password"
             // value={}
             textContentType="password"
             secureTextEntry={secured}
@@ -42,21 +40,13 @@ export const LoginScreen = ({ navigation }) => {
         </Spacer>
         
         <Spacer size="large">
-          
-            <TouchableOpacity onPress={() => navigation.navigate("VerifyEmail")}>
-              <Text variant="error">Forgot Password?</Text>
-            </TouchableOpacity>
-          
-        </Spacer>
-        
-        <Spacer size="large">
           <AuthButton
             icon="lock-open-outline"
             mode="contained"
             disabled={loading && true}
-            onPress={() => onLogin(email, password)}
+            onPress={() => onChangePassword(password, code, email, navigation)}
           >
-            {loading ? 'Loading' : 'Login'}
+            {loading ? 'Loading' : 'Change Password'}
           </AuthButton>
         </Spacer>
       </LoginContainer>

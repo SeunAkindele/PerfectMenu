@@ -40,6 +40,62 @@ export const LoginContextProvider = ({ children }) => {
     }, 2000);
   }
 
+  const onVerifyEmail = (email, navigation) => {
+    if(checkEmptyInput([email])) {
+      alert("None of the fields must be empty");
+      return false;
+    }
+    
+    const inputs = {
+      email,
+      page: 'verifyEmail'
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      api("register", {request: inputs}, "", response => {
+        if(response['success'] === true) {
+          alert(response['data']);
+          navigation.navigate("ChangePassword", {email: email});
+          setLoading(false);
+        } else {
+          setLoading(false);
+          alert(response['data']);
+        }
+      });
+      setLoading(false);
+    }, 2000);
+  }
+
+  const onChangePassword = (password, code, email, navigation) => {
+    if(checkEmptyInput([password, code])) {
+      alert("None of the fields must be empty");
+      return false;
+    }
+    
+    const inputs = {
+      password,
+      code,
+      email,
+      page: 'changePassword'
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      api("register", {request: inputs}, "", response => {
+        if(response['success'] === true) {
+          alert(response['data']);
+          navigation.navigate("Login");
+          setLoading(false);
+        } else {
+          setLoading(false);
+          alert(response['data']);
+        }
+      });
+      setLoading(false);
+    }, 2000);
+  }
+
   const onLogout = () => {
     setUser({});
     setAuthorization(0);
@@ -55,6 +111,8 @@ export const LoginContextProvider = ({ children }) => {
     isAuthenticated,
     authorization,
     token,
-    user
+    user,
+    onVerifyEmail,
+    onChangePassword
   }}>{children}</LoginContext.Provider>;
 }
